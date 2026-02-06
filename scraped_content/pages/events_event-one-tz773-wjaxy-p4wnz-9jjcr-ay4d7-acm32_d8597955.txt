@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Squarespace Inc/Squarespace 6//v6//EN
+BEGIN:VEVENT
+UID:659578d3dce7ab75fa5ebfef@squarespace.com
+DTSTAMP:20240612T134121Z
+DTSTART:20240706T220000Z
+DTEND:20240707T020000Z
+SUMMARY:Supercars at Sunset 4th of July Celebration
+GEO:39.986809;-76.038919
+LOCATION:The Houston Co Cafe\, 835 Houston Run Drive\, Gap\, PA\, 17527\, U
+ nited States
+END:VEVENT
+END:VCALENDAR

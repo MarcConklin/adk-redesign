@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Squarespace Inc/Squarespace 6//v6//EN
+BEGIN:VEVENT
+UID:6641547bd86aec7bc9b7adbc@squarespace.com
+DTSTAMP:20240519T023636Z
+DTSTART:20240601T200000Z
+DTEND:20240602T000000Z
+SUMMARY:Supercars at CarVault Open House
+GEO:0.0;0.0
+LOCATION:CarVault Mainline\, 1340 Swedesford Road\, Berwyn\, PA\, 19312\, U
+ nited States
+END:VEVENT
+END:VCALENDAR
