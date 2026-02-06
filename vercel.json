@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "website/package.json",
+      "use": "@vercel/next",
+      "config": {
+        "rootDirectory": "website"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "website/$1"
+    }
+  ]
+}
+
