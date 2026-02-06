@@ -61,7 +61,7 @@ export default function CarAnimation() {
         duration: 1
       }, '<')
       // Track lines animate - smoother
-      .to(trackRef.current?.querySelectorAll('.track-line'), {
+      .to(trackRef.current?.querySelectorAll('.track-line') || [], {
         x: '-120%',
         stagger: 0.08,
         duration: 2,
@@ -77,7 +77,7 @@ export default function CarAnimation() {
       });
 
       // Continuous track animation - smoother
-      gsap.to(trackRef.current?.querySelectorAll('.track-line'), {
+      gsap.to(trackRef.current?.querySelectorAll('.track-line') || [], {
         x: '-100%',
         duration: 3,
         ease: 'none',
