@@ -50,6 +50,9 @@ export default function Navigation() {
           <a href="#about" className="hover:text-gray-300 transition-colors">About</a>
           <a href="#sponsors" className="hover:text-gray-300 transition-colors">Sponsors</a>
           <a href="#contact" className="hover:text-gray-300 transition-colors">Contact</a>
+          <button className="bg-red-600 text-white px-6 py-3 rounded-full hover:bg-red-700 transition-all hover:scale-105 font-bold shadow-lg shadow-red-600/30">
+            How Can We Pray For You?
+          </button>
           <button className="bg-white text-black px-8 py-3 rounded-full hover:bg-gray-100 transition-all hover:scale-105 font-semibold">
             Buy Tickets
           </button>

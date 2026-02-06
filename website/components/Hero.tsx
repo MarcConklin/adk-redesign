@@ -15,34 +15,37 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title fade in and slide up
-      gsap.from(titleRef.current, {
+      // Set initial state for image to prevent glitch
+      gsap.set(imageRef.current, {
+        scale: 1,
+        y: 0,
+      });
+
+      // Split title into words for staggered animation
+      const titleWords = titleRef.current?.querySelectorAll('.word');
+
+      // Title fade in with stagger
+      gsap.from(titleWords || [], {
         y: 100,
         opacity: 0,
-        duration: 1.2,
+        duration: 1,
+        stagger: 0.1,
         ease: 'power3.out',
-        delay: 0.3
+        delay: 0.2
       });
 
       // Subtitle fade in
       gsap.from(subtitleRef.current, {
-        y: 50,
+        y: 30,
         opacity: 0,
         duration: 1,
         ease: 'power2.out',
         delay: 0.8
       });
 
-      // Image zoom out effect
-      gsap.from(imageRef.current, {
-        scale: 1.2,
-        duration: 1.5,
-        ease: 'power2.out'
-      });
-
-      // Parallax scroll effect on image
+      // Parallax scroll effect on image - smooth and subtle
       gsap.to(imageRef.current, {
-        y: 300,
+        y: 200,
         scale: 1.1,
         scrollTrigger: {
           trigger: heroRef.current,
@@ -51,6 +54,7 @@ export default function Hero() {
           scrub: 1,
         }
       });
+
     }, heroRef);
 
     return () => ctx.revert();
@@ -64,12 +68,12 @@ export default function Hero() {
           src="/images/DJI_0175_Original+2.jpg"
           alt="ADK Automotive Events"
           fill
-          className="object-cover"
+          className="object-cover opacity-70"
           priority
           quality={100}
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70"></div>
       </div>
 
       {/* Content */}
@@ -77,17 +81,26 @@ export default function Hero() {
         <h1
           ref={titleRef}
           className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 text-center leading-tight tracking-tight"
+          style={{ perspective: '1000px' }}
         >
-          Southeastern Pennsylvania's<br />
-          Premier Automotive Events
+          <span className="word inline-block" style={{ transformStyle: 'preserve-3d' }}>Driven</span>{' '}
+          <span className="word inline-block" style={{ transformStyle: 'preserve-3d' }}>by</span>{' '}
+          <span className="word inline-block text-red-500" style={{ transformStyle: 'preserve-3d' }}>Christ,</span>
+          <br />
+          <span className="word inline-block" style={{ transformStyle: 'preserve-3d' }}>United</span>{' '}
+          <span className="word inline-block" style={{ transformStyle: 'preserve-3d' }}>by</span>{' '}
+          <span className="word inline-block" style={{ transformStyle: 'preserve-3d' }}>a</span>{' '}
+          <span className="word inline-block" style={{ transformStyle: 'preserve-3d' }}>Love</span>{' '}
+          <span className="word inline-block" style={{ transformStyle: 'preserve-3d' }}>for</span>{' '}
+          <span className="word inline-block text-red-500" style={{ transformStyle: 'preserve-3d' }}>Cars</span>
         </h1>
 
         <p
           ref={subtitleRef}
           className="text-xl md:text-2xl text-white/90 text-center max-w-3xl font-light tracking-wide"
         >
-          Curating unforgettable experiences for automotive enthusiasts.<br />
-          From road rallies to car shows, we bring the community together.
+          Southeastern PA&apos;s leading automotive event provider.<br />
+          Connecting the community through world-class supercar shows, road rallies, and unforgettable experiences.
         </p>
       </div>
 
