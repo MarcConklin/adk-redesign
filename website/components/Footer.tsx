@@ -12,7 +12,7 @@ export default function Footer() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(footerRef.current?.querySelectorAll('.footer-item'), {
+      gsap.from(footerRef.current?.querySelectorAll('.footer-item') || [], {
         opacity: 0,
         y: 50,
         stagger: 0.1,

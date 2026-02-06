@@ -24,7 +24,7 @@ export default function MissionSection() {
       });
 
       // Fade in and scale text - smoother with better stagger
-      gsap.from(textRef.current?.querySelectorAll('.mission-text'), {
+      gsap.from(textRef.current?.querySelectorAll('.mission-text') || [], {
         opacity: 0,
         y: 120,
         scale: 0.85,
