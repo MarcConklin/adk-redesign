@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -12,6 +12,8 @@ export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const colorRevealRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -60,20 +62,84 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
+  // Mouse move handler for color reveal effect (desktop)
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        setMousePosition({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+        });
+      }
+    };
+
+    // Touch move handler for mobile
+    const handleTouchMove = (e: TouchEvent) => {
+      if (heroRef.current && e.touches.length > 0) {
+        const rect = heroRef.current.getBoundingClientRect();
+        const touch = e.touches[0];
+        setMousePosition({
+          x: touch.clientX - rect.left,
+          y: touch.clientY - rect.top,
+        });
+      }
+    };
+
+    const heroElement = heroRef.current;
+    if (heroElement) {
+      heroElement.addEventListener('mousemove', handleMouseMove);
+      heroElement.addEventListener('touchmove', handleTouchMove);
+      heroElement.addEventListener('touchstart', handleTouchMove);
+    }
+
+    return () => {
+      if (heroElement) {
+        heroElement.removeEventListener('mousemove', handleMouseMove);
+        heroElement.removeEventListener('touchmove', handleTouchMove);
+        heroElement.removeEventListener('touchstart', handleTouchMove);
+      }
+    };
+  }, []);
+
   return (
     <section ref={heroRef} className="relative h-screen overflow-hidden bg-black">
-      {/* Background Image */}
+      {/* Image Container - Both layers move together with parallax */}
       <div ref={imageRef} className="absolute inset-0 w-full h-full">
-        <Image
-          src="/images/DJI_0175_Original+2.jpg"
-          alt="ADK Automotive Events"
-          fill
-          className="object-cover opacity-70"
-          priority
-          quality={100}
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70"></div>
+        {/* Background Image - Grayscale Base */}
+        <div className="absolute inset-0 w-full h-full">
+          <Image
+            src="/images/DJI_0175_Original+2.jpg"
+            alt="ADK Automotive Events"
+            fill
+            className="object-cover opacity-70 grayscale"
+            priority
+            quality={100}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70"></div>
+        </div>
+
+        {/* Color Reveal Layer - Shows brighter color on mouse hover */}
+        <div
+          ref={colorRevealRef}
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{
+            maskImage: `radial-gradient(circle 300px at ${mousePosition.x}px ${mousePosition.y}px, black, transparent)`,
+            WebkitMaskImage: `radial-gradient(circle 300px at ${mousePosition.x}px ${mousePosition.y}px, black, transparent)`,
+          }}
+        >
+          <Image
+            src="/images/DJI_0175_Original+2.jpg"
+            alt="ADK Automotive Events"
+            fill
+            className="object-cover brightness-125"
+            priority
+            quality={100}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/50"></div>
+        </div>
       </div>
 
       {/* Content */}

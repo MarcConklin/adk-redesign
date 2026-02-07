@@ -75,46 +75,65 @@ export default function EventsShowcase() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative bg-black py-24 md:py-32" id="events">
-      <div className="max-w-7xl mx-auto px-6">
+    <section ref={sectionRef} className="relative py-24 md:py-32" id="events">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/background-image.jpg"
+          alt="Background"
+          fill
+          className="object-cover opacity-50"
+          quality={100}
+        />
+      </div>
+
+      {/* White background base */}
+      <div className="absolute inset-0 bg-white -z-10"></div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Header */}
-        <div ref={headerRef} className="text-center mb-16">
-          <p className="text-sm uppercase tracking-widest text-gray-500 mb-4">Our Events</p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">Experience Excellence</h2>
+        <div ref={headerRef} className="text-center mb-20">
+          <p className="text-xs uppercase tracking-[0.3em] text-gray-500 mb-6 font-bold">Our Events</p>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-black leading-[1.1] tracking-tight mb-8">Where Passion<br />Meets Purpose</h2>
+          <div className="w-24 h-1 bg-black mx-auto"></div>
         </div>
 
-        {/* Events Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        {/* Events Grid - Magazine Layout */}
+        <div className="grid md:grid-cols-2 gap-16">
           {events.map((event, index) => (
             <div
               key={index}
               ref={(el) => { cardsRef.current[index] = el; }}
-              className="group relative h-[500px] rounded-2xl overflow-hidden cursor-pointer"
+              className="group cursor-pointer"
             >
               {/* Image */}
-              <div className="absolute inset-0">
+              <div className="relative h-[500px] mb-6 overflow-hidden bg-gray-100">
                 <Image
                   src={event.image}
                   alt={event.title}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="object-cover transition-all duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
                 />
+                <div className="absolute top-6 right-6 bg-red-600 text-white px-4 py-2 text-xs uppercase tracking-wider font-bold">
+                  {event.tag}
+                </div>
               </div>
-
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
 
               {/* Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h3 className="text-3xl md:text-4xl font-bold mb-3 text-white">{event.title}</h3>
-                <p className="text-gray-300 text-lg mb-6">{event.description}</p>
-                <button className="px-6 py-3 bg-white text-black rounded-lg font-semibold hover:bg-red-500 hover:text-white transition-all">
-                  Learn More
-                </button>
+              <div className="space-y-4">
+                <h3 className="text-4xl md:text-5xl font-bold text-black tracking-tight group-hover:text-red-600 transition-colors">
+                  {event.title}
+                </h3>
+                <p className="text-gray-700 text-lg leading-relaxed font-light">
+                  {event.description}
+                </p>
+                <div className="pt-2">
+                  <span className="inline-flex items-center gap-2 text-black font-semibold group-hover:gap-4 transition-all">
+                    Learn More
+                    <span className="text-red-600">→</span>
+                  </span>
+                </div>
               </div>
-
-              {/* Hover Border Effect */}
-              <div className="absolute inset-0 border-2 border-transparent group-hover:border-red-500/50 rounded-2xl transition-all duration-300"></div>
             </div>
           ))}
         </div>

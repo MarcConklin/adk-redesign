@@ -51,114 +51,109 @@ export default function MissionSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-black py-24 md:py-32 overflow-hidden"
+      className="relative py-24 md:py-32 overflow-hidden"
       id="about"
     >
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
-          backgroundSize: '40px 40px'
-        }}></div>
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/background-image.jpg"
+          alt="Background"
+          fill
+          className="object-cover opacity-50"
+          quality={100}
+        />
       </div>
+
+      {/* White background base */}
+      <div className="absolute inset-0 bg-white -z-10"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Header */}
-        <div ref={headerRef} className="text-center mb-20">
-          <p className="text-sm uppercase tracking-widest text-red-500 mb-4 font-semibold">
+        <div ref={headerRef} className="text-center mb-24">
+          <p className="text-xs uppercase tracking-[0.3em] text-red-600 mb-6 font-bold">
             Colossians 3:17
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-black leading-[1.1] tracking-tight">
             Driven to Provide the Best<br />Automotive Experience
           </h2>
-          <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          <div className="w-24 h-1 bg-red-600 mx-auto mb-8"></div>
+          <p className="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed font-light">
             ADK Automotive LLC is Southeastern PA&apos;s leading automotive event provider, connecting the community with unparalleled events.
-            Our mission is to <span className="text-white font-semibold">empower the automotive community through the love of Christ</span> by offering exciting,
+            Our mission is to <span className="text-black font-semibold">empower the automotive community through the love of Christ</span> by offering exciting,
             safe events that encourage both personal bonds and professional connections.
           </p>
         </div>
 
         {/* Biblical Principles - Three Pillars */}
-        <div ref={cardsRef} className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div ref={cardsRef} className="grid md:grid-cols-3 gap-12 max-w-7xl mx-auto">
           {/* Community & Fellowship */}
-          <div className="mission-card group relative h-[500px] rounded-2xl overflow-hidden">
-            <div className="absolute inset-0">
+          <div className="mission-card group">
+            <div className="relative h-[400px] mb-6 overflow-hidden">
               <Image
                 src="/images/_DSC7937.jpg"
                 alt="Community & Fellowship"
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30"></div>
-
-            <div className="absolute inset-0 p-8 flex flex-col justify-end">
-              <h3 className="text-3xl font-bold text-white mb-3 h-[80px] flex items-start">
-                <span>Community &<br />Fellowship</span>
+            <div className="space-y-4">
+              <h3 className="text-3xl font-bold text-black tracking-tight">
+                Community &<br />Fellowship
               </h3>
-              <p className="text-gray-300 leading-relaxed mb-2">
+              <p className="text-gray-700 leading-relaxed font-light">
                 Creating welcoming spaces where people experience God&apos;s love through authentic relationships built around a shared passion for cars
               </p>
-              <p className="text-sm text-red-400 italic">
+              <p className="text-sm text-red-600 italic font-medium border-l-2 border-red-600 pl-4">
                 "For where two or three gather in my name, there am I with them" - Matthew 18:20
               </p>
             </div>
-
-            <div className="absolute inset-0 border-2 border-transparent group-hover:border-red-500/50 rounded-2xl transition-all duration-300"></div>
           </div>
 
           {/* Ministry Through Events */}
-          <div className="mission-card group relative h-[500px] rounded-2xl overflow-hidden">
-            <div className="absolute inset-0">
+          <div className="mission-card group">
+            <div className="relative h-[400px] mb-6 overflow-hidden">
               <Image
                 src="/images/ADKRoadRallyII2024-107.jpeg"
                 alt="Ministry Through Events"
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30"></div>
-
-            <div className="absolute inset-0 p-8 flex flex-col justify-end">
-              <h3 className="text-3xl font-bold text-white mb-3 h-[80px] flex items-start">
-                <span>Ministry Through<br />Events</span>
+            <div className="space-y-4">
+              <h3 className="text-3xl font-bold text-black tracking-tight">
+                Ministry Through<br />Events
               </h3>
-              <p className="text-gray-300 leading-relaxed mb-2">
+              <p className="text-gray-700 leading-relaxed font-light">
                 Every event is an opportunity to share about Jesus and show God&apos;s glory through excellence in everything we do, creating meaningful moments
               </p>
-              <p className="text-sm text-red-400 italic">
+              <p className="text-sm text-red-600 italic font-medium border-l-2 border-red-600 pl-4">
                 "Whatever you do, work at it with all your heart" - Colossians 3:23
               </p>
             </div>
-
-            <div className="absolute inset-0 border-2 border-transparent group-hover:border-red-500/50 rounded-2xl transition-all duration-300"></div>
           </div>
 
           {/* Serving with Love */}
-          <div className="mission-card group relative h-[500px] rounded-2xl overflow-hidden">
-            <div className="absolute inset-0">
+          <div className="mission-card group">
+            <div className="relative h-[400px] mb-6 overflow-hidden">
               <Image
                 src="/images/_DSC5281_Original.jpg"
                 alt="Serving with Love"
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30"></div>
-
-            <div className="absolute inset-0 p-8 flex flex-col justify-end">
-              <h3 className="text-3xl font-bold text-white mb-3 h-[80px] flex items-start">
-                <span>Serving with Love</span>
+            <div className="space-y-4">
+              <h3 className="text-3xl font-bold text-black tracking-tight">
+                Serving with Love
               </h3>
-              <p className="text-gray-300 leading-relaxed mb-2">
+              <p className="text-gray-700 leading-relaxed font-light">
                 Providing exceptional experiences that serve our community with compassion, making a positive impact that points people to Christ
               </p>
-              <p className="text-sm text-red-400 italic">
+              <p className="text-sm text-red-600 italic font-medium border-l-2 border-red-600 pl-4">
                 "Serve one another humbly in love" - Galatians 5:13
               </p>
             </div>
-
-            <div className="absolute inset-0 border-2 border-transparent group-hover:border-red-500/50 rounded-2xl transition-all duration-300"></div>
           </div>
         </div>
       </div>
