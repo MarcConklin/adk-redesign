@@ -72,52 +72,75 @@ export default function Navigation() {
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      <div className={`md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg transition-all duration-500 ${
-        isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-      }`} style={{ top: '0' }}>
-        <div className={`flex flex-col items-center justify-center h-full gap-8 transition-all duration-500 delay-100 ${
+      {/* Mobile Menu Full-Screen Popup */}
+      <div className={`md:hidden fixed inset-0 bg-black z-[100] transition-all duration-500 ${
+        isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+      }`}>
+        {/* Close Button */}
+        <button
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="absolute top-8 right-6 z-[110] flex flex-col gap-1.5 p-2"
+          aria-label="Close menu"
+        >
+          <span className="w-7 h-0.5 bg-white rotate-45 translate-y-2"></span>
+          <span className="w-7 h-0.5 bg-white opacity-0"></span>
+          <span className="w-7 h-0.5 bg-white -rotate-45 -translate-y-2"></span>
+        </button>
+
+        {/* Menu Content */}
+        <div className={`flex flex-col items-center justify-center h-full gap-8 px-8 transition-all duration-500 delay-100 ${
           isMobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`}>
+          {/* Logo */}
+          <Image
+            src="/images/ADK-removebg-preview.png"
+            alt="ADK Automotive"
+            width={200}
+            height={100}
+            className="h-20 w-auto brightness-125 mb-8"
+          />
+
+          {/* Navigation Links */}
           <a
             href="#events"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="text-white text-2xl font-medium hover:text-red-500 transition-colors"
+            className="text-white text-3xl font-bold hover:text-red-500 transition-colors tracking-tight"
           >
             Events
           </a>
           <a
             href="#about"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="text-white text-2xl font-medium hover:text-red-500 transition-colors"
+            className="text-white text-3xl font-bold hover:text-red-500 transition-colors tracking-tight"
           >
             About
           </a>
           <a
             href="#sponsors"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="text-white text-2xl font-medium hover:text-red-500 transition-colors"
+            className="text-white text-3xl font-bold hover:text-red-500 transition-colors tracking-tight"
           >
             Sponsors
           </a>
           <a
             href="#contact"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="text-white text-2xl font-medium hover:text-red-500 transition-colors"
+            className="text-white text-3xl font-bold hover:text-red-500 transition-colors tracking-tight"
           >
             Contact
           </a>
 
-          <div className="flex flex-col gap-4 mt-8 w-full px-8">
+          {/* Action Buttons */}
+          <div className="flex flex-col gap-4 mt-12 w-full max-w-sm">
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="bg-red-600 text-white px-8 py-4 rounded-full hover:bg-red-700 transition-all font-bold shadow-lg shadow-red-600/30 w-full"
+              className="bg-red-600 text-white px-8 py-5 rounded-full hover:bg-red-700 transition-all font-bold shadow-lg shadow-red-600/30 w-full text-lg"
             >
               How Can We Pray For You?
             </button>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="bg-white text-black px-8 py-4 rounded-full hover:bg-gray-100 transition-all font-semibold w-full"
+              className="bg-white text-black px-8 py-5 rounded-full hover:bg-gray-100 transition-all font-semibold w-full text-lg"
             >
               Buy Tickets
             </button>
