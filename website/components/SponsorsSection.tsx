@@ -120,7 +120,7 @@ export default function SponsorsSection() {
                   src={sponsor.logo}
                   alt={sponsor.name}
                   fill
-                  className="object-contain grayscale hover:grayscale-0 transition-all"
+                  className="object-contain transition-all"
                 />
               </div>
             </div>
@@ -141,7 +141,7 @@ export default function SponsorsSection() {
                   src={sponsor.logo}
                   alt={sponsor.name}
                   fill
-                  className="object-contain grayscale hover:grayscale-0 transition-all"
+                  className="object-contain transition-all"
                 />
               </div>
             </div>
@@ -150,11 +150,13 @@ export default function SponsorsSection() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mt-20 text-center relative z-10">
-        <button className="px-10 py-4 bg-black text-white font-semibold text-lg hover:bg-red-600 transition-all hover:scale-105">
+        <a
+          href="#inquiry"
+          className="inline-block px-10 py-4 bg-black text-white font-semibold text-lg hover:bg-red-600 transition-all hover:scale-105"
+        >
           Become a Sponsor
-        </button>
+        </a>
       </div>
     </section>
   );
 }
-

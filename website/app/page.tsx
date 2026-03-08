@@ -7,6 +7,7 @@ import MissionSection from '@/components/MissionSection';
 import EventsShowcase from '@/components/EventsShowcase';
 import YouTubeSection from '@/components/YouTubeSection';
 import SponsorsSection from '@/components/SponsorsSection';
+import InquiryCTA from '@/components/InquiryCTA';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -28,8 +29,8 @@ export default function Home() {
       <EventsShowcase />
       <SponsorsSection />
       <YouTubeSection />
+      <InquiryCTA />
       <Footer />
     </main>
   );
 }
-

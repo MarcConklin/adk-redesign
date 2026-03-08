@@ -112,7 +112,7 @@ export default function EventsShowcase() {
                   src={event.image}
                   alt={event.title}
                   fill
-                  className="object-cover transition-all duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
+                  className="object-cover transition-all duration-700 group-hover:scale-105"
                 />
                 <div className="absolute top-6 right-6 bg-red-600 text-white px-4 py-2 text-xs uppercase tracking-wider font-bold">
                   {event.tag}
@@ -141,4 +141,3 @@ export default function EventsShowcase() {
     </section>
   );
 }
-

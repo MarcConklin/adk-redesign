@@ -1,12 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { FormEvent, useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 export default function Navigation() {
+  type ModalMode = 'contact' | 'prayer';
+
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<ModalMode>('contact');
+  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
+  const [isContactSubmitted, setIsContactSubmitted] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,9 +37,9 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  // Prevent body scroll when mobile menu is open
+  // Prevent body scroll when mobile menu or contact modal is open
   useEffect(() => {
-    if (isMobileMenuOpen) {
+    if (isMobileMenuOpen || isContactModalOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -40,14 +47,61 @@ export default function Navigation() {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, isContactModalOpen]);
+
+  useEffect(() => {
+    if (!isContactModalOpen) {
+      return;
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsContactModalOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isContactModalOpen]);
+
+  const openContactModal = (mode: ModalMode = 'contact') => {
+    setModalMode(mode);
+    setIsContactSubmitted(false);
+    setIsSubmittingContact(false);
+    setIsMobileMenuOpen(false);
+    setIsContactModalOpen(true);
+  };
+
+  const closeContactModal = () => {
+    setIsContactModalOpen(false);
+    setIsSubmittingContact(false);
+  };
+
+  const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmittingContact(true);
+
+    window.setTimeout(() => {
+      setIsSubmittingContact(false);
+      setIsContactSubmitted(true);
+    }, 900);
+  };
+
+  const isPrayerMode = modalMode === 'prayer';
+
+  useEffect(() => {
+    if (isContactModalOpen && modalRef.current) {
+      modalRef.current.scrollTop = 0;
+    }
+  }, [isContactModalOpen, modalMode, isContactSubmitted]);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-      isVisible ? 'translate-y-0' : '-translate-y-full'
-    } bg-black py-6 shadow-lg`}>
+    <>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      } bg-black py-6 shadow-lg`}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <div className="flex items-center">
+        <a href="/" className="flex items-center" aria-label="Go to home page">
           <Image
             src="/images/ADK-removebg-preview.png"
             alt="ADK Automotive"
@@ -56,20 +110,28 @@ export default function Navigation() {
             className="h-24 w-auto brightness-125"
             priority
           />
-        </div>
+        </a>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white">
-          <a href="#events" className="hover:text-gray-300 transition-colors">Events</a>
-          <a href="#about" className="hover:text-gray-300 transition-colors">About</a>
-          <a href="#sponsors" className="hover:text-gray-300 transition-colors">Sponsors</a>
-          <a href="#contact" className="hover:text-gray-300 transition-colors">Contact</a>
-          <button className="bg-red-600 text-white px-6 py-3 rounded-full hover:bg-red-700 transition-all hover:scale-105 font-bold shadow-lg shadow-red-600/30">
+          <a href="/events" className="hover:text-gray-300 transition-colors">Events</a>
+          <a href="/about" className="hover:text-gray-300 transition-colors">About</a>
+          <a href="/#sponsors" className="hover:text-gray-300 transition-colors">Sponsors</a>
+          <button onClick={() => openContactModal('contact')} className="hover:text-gray-300 transition-colors">Contact</button>
+          <button
+            onClick={() => openContactModal('prayer')}
+            className="bg-red-600 text-white px-6 py-3 rounded-full hover:bg-red-700 transition-all hover:scale-105 font-bold shadow-lg shadow-red-600/30"
+          >
             How Can We Pray For You?
           </button>
-          <button className="bg-white text-black px-8 py-3 rounded-full hover:bg-gray-100 transition-all hover:scale-105 font-semibold">
+          <a
+            href="https://renndvous.com/event/adk-road-rally-august/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-white text-black px-8 py-3 rounded-full hover:bg-gray-100 transition-all hover:scale-105 font-semibold"
+          >
             Buy Tickets
-          </button>
+          </a>
         </div>
 
         {/* Mobile Hamburger Button */}
@@ -111,53 +173,196 @@ export default function Navigation() {
 
             {/* Navigation Links */}
             <a
-              href="#events"
+              href="/events"
               onClick={() => setIsMobileMenuOpen(false)}
               className="text-white text-3xl font-bold hover:text-red-500 transition-colors tracking-tight"
             >
               Events
             </a>
             <a
-              href="#about"
+              href="/about"
               onClick={() => setIsMobileMenuOpen(false)}
               className="text-white text-3xl font-bold hover:text-red-500 transition-colors tracking-tight"
             >
               About
             </a>
             <a
-              href="#sponsors"
+              href="/#sponsors"
               onClick={() => setIsMobileMenuOpen(false)}
               className="text-white text-3xl font-bold hover:text-red-500 transition-colors tracking-tight"
             >
               Sponsors
             </a>
-            <a
-              href="#contact"
-              onClick={() => setIsMobileMenuOpen(false)}
+            <button
+              onClick={() => openContactModal('contact')}
               className="text-white text-3xl font-bold hover:text-red-500 transition-colors tracking-tight"
             >
               Contact
-            </a>
+            </button>
 
             {/* Action Buttons */}
             <div className="flex flex-col gap-4 mt-12 w-full max-w-sm">
               <button
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => openContactModal('prayer')}
                 className="bg-red-600 text-white px-8 py-5 rounded-full hover:bg-red-700 transition-all font-bold shadow-lg shadow-red-600/30 w-full text-lg"
               >
                 How Can We Pray For You?
               </button>
-              <button
+              <a
+                href="https://renndvous.com/event/adk-road-rally-august/"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="bg-white text-black px-8 py-5 rounded-full hover:bg-gray-100 transition-all font-semibold w-full text-lg"
+                className="bg-white text-black px-8 py-5 rounded-full hover:bg-gray-100 transition-all font-semibold w-full text-lg text-center"
               >
                 Buy Tickets
-              </button>
+              </a>
             </div>
           </div>
         </div>
       )}
-    </nav>
+
+      </nav>
+
+      {isContactModalOpen && (
+        <div
+          className="fixed inset-0 z-[2147483000] overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Contact form modal"
+          onClick={closeContactModal}
+        >
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+          <div className="relative flex min-h-full items-center justify-center p-4 md:p-8">
+            <div
+              ref={modalRef}
+              className="modal-pop relative w-full max-w-3xl max-h-[calc(100dvh-2rem)] md:max-h-[calc(100dvh-4rem)] overflow-y-auto rounded-3xl border border-white/40 bg-[radial-gradient(circle_at_top_right,_#ffffff,_#f4f4f5_45%,_#ececec)] shadow-[0_32px_100px_rgba(0,0,0,0.55)]"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="h-1.5 w-full bg-gradient-to-r from-red-700 via-red-500 to-black"></div>
+              <div className="sticky top-0 z-10 flex items-start justify-between gap-4 p-6 md:p-8 border-b border-black/10 bg-white/90 backdrop-blur">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.28em] text-red-600 font-bold mb-3">
+                    {isPrayerMode ? 'Prayer Request' : 'Contact Us'}
+                  </p>
+                  <h3 className="text-2xl md:text-4xl font-black uppercase text-black leading-tight">
+                    {isPrayerMode ? 'How Can We Pray For You?' : 'Send A Message'}
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={closeContactModal}
+                  className="h-11 w-11 shrink-0 rounded-full bg-black text-white text-2xl leading-none hover:bg-red-600 transition-colors"
+                  aria-label="Close modal"
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="p-6 md:p-8">
+                {isContactSubmitted ? (
+                  <div className="rounded-xl border border-red-200 bg-red-50 p-8 text-center">
+                    <h4 className="text-2xl font-black text-black mb-3">Message Sent</h4>
+                    <p className="text-gray-700 mb-6">
+                      Thanks for reaching out. Our team will follow up soon.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={closeContactModal}
+                      className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-black text-white font-semibold hover:bg-red-600 transition-colors"
+                    >
+                      Close
+                    </button>
+                  </div>
+                ) : (
+                  <form key={modalMode} className="space-y-6" onSubmit={handleContactSubmit}>
+                    <div className="grid md:grid-cols-2 gap-5">
+                      <div>
+                        <label htmlFor="contactFirstName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                          First Name
+                        </label>
+                        <input
+                          id="contactFirstName"
+                          name="firstName"
+                          required
+                          className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="contactLastName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                          Last Name
+                        </label>
+                        <input
+                          id="contactLastName"
+                          name="lastName"
+                          required
+                          className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="contactEmail" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                        Email
+                      </label>
+                      <input
+                        id="contactEmail"
+                        name="email"
+                        type="email"
+                        required
+                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="contactSubject" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                        Subject
+                      </label>
+                      <input
+                        id="contactSubject"
+                        name="subject"
+                        required
+                        defaultValue={isPrayerMode ? 'Prayer Request' : ''}
+                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="contactMessage" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                        Message
+                      </label>
+                      <textarea
+                        id="contactMessage"
+                        name="message"
+                        required
+                        rows={5}
+                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                      />
+                    </div>
+
+                    <div className="flex flex-col md:flex-row gap-4 pt-2">
+                      <button
+                        type="submit"
+                        disabled={isSubmittingContact}
+                        className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-gradient-to-r from-red-700 to-red-500 text-white font-bold text-lg hover:from-red-800 hover:to-red-600 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+                      >
+                        {isSubmittingContact ? 'Sending...' : isPrayerMode ? 'Send Prayer Request' : 'Send Message'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={closeContactModal}
+                        className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-black/20 text-black font-semibold hover:bg-black hover:text-white transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
-

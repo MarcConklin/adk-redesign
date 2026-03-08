@@ -94,7 +94,7 @@ export default function MissionSection() {
                 src="/images/_DSC7937.jpg"
                 alt="Community & Fellowship"
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
             <div className="space-y-4">
@@ -117,7 +117,7 @@ export default function MissionSection() {
                 src="/images/ADKRoadRallyII2024-107.jpeg"
                 alt="Ministry Through Events"
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
             <div className="space-y-4">
@@ -140,7 +140,7 @@ export default function MissionSection() {
                 src="/images/_DSC5281_Original.jpg"
                 alt="Serving with Love"
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
             <div className="space-y-4">
