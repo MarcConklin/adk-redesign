@@ -74,7 +74,7 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-700 text-sm">
               <li><a href="/events" className="hover:text-red-600 transition-colors font-light">Events</a></li>
               <li><a href="/about" className="hover:text-red-600 transition-colors font-light">About</a></li>
-              <li><a href="/#sponsors" className="hover:text-red-600 transition-colors font-light">Sponsors</a></li>
+              <li><a href="/sponsors" className="hover:text-red-600 transition-colors font-light">Sponsors</a></li>
               <li><a href="/#inquiry" className="hover:text-red-600 transition-colors font-light">Become a Vendor</a></li>
               <li><a href="https://renndvous.com/event/adk-road-rally-august/" target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition-colors font-light">Buy Tickets</a></li>
             </ul>

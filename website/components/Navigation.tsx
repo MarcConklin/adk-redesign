@@ -116,7 +116,7 @@ export default function Navigation() {
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white">
           <a href="/events" className="hover:text-gray-300 transition-colors">Events</a>
           <a href="/about" className="hover:text-gray-300 transition-colors">About</a>
-          <a href="/#sponsors" className="hover:text-gray-300 transition-colors">Sponsors</a>
+          <a href="/sponsors" className="hover:text-gray-300 transition-colors">Sponsors</a>
           <button onClick={() => openContactModal('contact')} className="hover:text-gray-300 transition-colors">Contact</button>
           <button
             onClick={() => openContactModal('prayer')}
@@ -187,7 +187,7 @@ export default function Navigation() {
               About
             </a>
             <a
-              href="/#sponsors"
+              href="/sponsors"
               onClick={() => setIsMobileMenuOpen(false)}
               className="text-white text-3xl font-bold hover:text-red-500 transition-colors tracking-tight"
             >

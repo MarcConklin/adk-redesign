@@ -4,6 +4,8 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+import Link from 'next/link';
+import { sponsors } from '@/data/sponsors';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -62,21 +64,8 @@ export default function SponsorsSection() {
     return () => ctx.revert();
   }, []);
 
-  // Only including sponsors with verified actual logo files
-  const sponsorsRow1 = [
-    { name: 'Manheim Imports', logo: '/images/Manheim+Imports+Logo.png' },
-    { name: 'Sun Protector Window Tinting', logo: '/images/sponsor-0.png' },
-    { name: 'KP Elite', logo: '/images/KP+Elite.jpg' },
-    { name: 'Bush Auto Group', logo: '/images/BushAutoGroup+Logo_Collision&Detail.png' },
-  ];
-
-  const sponsorsRow2 = [
-    { name: 'CarVault', logo: '/images/CarVault_logo_lockup_tm_blue_final_2500px.png' },
-    { name: 'JSG Graphics', logo: '/images/JSG-Logo.png' },
-    { name: 'TPDCW', logo: '/images/Stacked+TPDCW.png' },
-    { name: 'Sun Protectors - Ephrata', logo: '/images/Sun+Protectors+-+Ephrata.png' },
-    { name: 'LSC', logo: '/images/lsc-removebg-preview.png' },
-  ];
+  const sponsorsRow1 = sponsors.slice(0, 4);
+  const sponsorsRow2 = sponsors.slice(4);
 
   return (
     <section
@@ -150,12 +139,12 @@ export default function SponsorsSection() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mt-20 text-center relative z-10">
-        <a
-          href="#inquiry"
+        <Link
+          href="/sponsors"
           className="inline-block px-10 py-4 bg-black text-white font-semibold text-lg hover:bg-red-600 transition-all hover:scale-105"
         >
           Become a Sponsor
-        </a>
+        </Link>
       </div>
     </section>
   );
