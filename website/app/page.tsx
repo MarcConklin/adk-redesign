@@ -28,8 +28,8 @@ export default function Home() {
       <MissionSection />
       <EventsShowcase />
       <SponsorsSection />
-      <YouTubeSection />
       <InquiryCTA />
+      <YouTubeSection />
       <Footer />
     </main>
   );

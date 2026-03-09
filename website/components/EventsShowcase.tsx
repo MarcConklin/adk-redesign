@@ -10,27 +10,23 @@ gsap.registerPlugin(ScrollTrigger);
 const events = [
   {
     title: 'Supercars at Sunset',
-    description: 'Southeastern PA\'s largest supercar events',
-    image: '/images/IMG_2219+2.jpg',
-    tag: 'Monthly'
+    description: 'Evening showcases featuring curated supercar lineups, high-energy atmosphere, and a welcoming space for enthusiasts, families, and local partners.',
+    image: '/images/IMG_2219+2.jpg'
   },
   {
     title: 'ADK Road Rally',
-    description: 'Epic driving experiences through scenic routes',
-    image: '/images/_DSC5861_Original.jpeg',
-    tag: 'Seasonal'
+    description: 'Signature driving days built around scenic routes, organized checkpoints, and shared moments that bring the ADK community together on the road.',
+    image: '/images/_DSC5861_Original.jpeg'
   },
   {
     title: 'Cars & Coffee',
-    description: 'Casual morning meetups for enthusiasts',
-    image: '/images/_DSC9517.jpg',
-    tag: 'Weekly'
+    description: 'Relaxed morning gatherings with great cars, conversation, and coffee. Perfect for connecting with other enthusiasts in a laid-back setting.',
+    image: '/images/_DSC9517.jpg'
   },
   {
     title: 'Special Events',
-    description: 'Giving back to our community',
-    image: '/images/_DSC8567.jpg',
-    tag: 'Special'
+    description: 'Purpose-driven experiences focused on fellowship, giving back, and creating meaningful impact through the automotive community.',
+    image: '/images/_DSC8567.jpg'
   }
 ];
 
@@ -104,7 +100,7 @@ export default function EventsShowcase() {
             <div
               key={index}
               ref={(el) => { cardsRef.current[index] = el; }}
-              className="group cursor-pointer"
+              className="group"
             >
               {/* Image */}
               <div className="relative h-[500px] mb-6 overflow-hidden bg-gray-100">
@@ -114,9 +110,6 @@ export default function EventsShowcase() {
                   fill
                   className="object-cover transition-all duration-700 group-hover:scale-105"
                 />
-                <div className="absolute top-6 right-6 bg-red-600 text-white px-4 py-2 text-xs uppercase tracking-wider font-bold">
-                  {event.tag}
-                </div>
               </div>
 
               {/* Content */}
@@ -127,12 +120,6 @@ export default function EventsShowcase() {
                 <p className="text-gray-700 text-lg leading-relaxed font-light">
                   {event.description}
                 </p>
-                <div className="pt-2">
-                  <span className="inline-flex items-center gap-2 text-black font-semibold group-hover:gap-4 transition-all">
-                    Learn More
-                    <span className="text-red-600">→</span>
-                  </span>
-                </div>
               </div>
             </div>
           ))}
