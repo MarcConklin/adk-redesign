@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { sponsors } from '@/data/sponsors';
@@ -92,48 +91,14 @@ export default function SponsorsPage() {
           <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-white/8 blur-3xl"></div>
         </div>
 
-        <div className="relative z-10 mx-auto grid max-w-7xl gap-12 px-6 pb-16 md:pb-20 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <p className="mb-5 text-xs font-bold uppercase tracking-[0.34em] text-red-400">ADK Sponsors</p>
-            <h1 className="max-w-5xl text-5xl font-extrabold leading-[0.94] tracking-[-0.03em] md:text-7xl lg:text-8xl">
-              The Brands Behind
-              <span className="text-red-500"> The Experience.</span>
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pb-16 md:pb-20">
+          <div className="max-w-4xl">
+            <h1 className="text-5xl font-extrabold leading-[0.94] tracking-[-0.03em] md:text-7xl lg:text-8xl">
+              Our Sponsors
             </h1>
-            <p className="mt-8 max-w-3xl text-lg leading-relaxed text-white/82 md:text-2xl">
-              The companies supporting ADK events, community, and presentation. Every card below is ready for a live website link as soon as you send it over.
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/72 md:text-xl">
+              The brands helping ADK bring premium automotive events to life.
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                href="/#inquiry"
-                className="inline-flex items-center rounded-full bg-red-600 px-8 py-4 text-base font-bold text-white transition-all hover:scale-[1.02] hover:bg-red-500"
-              >
-                Become A Sponsor
-              </Link>
-              <Link
-                href="/events"
-                className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-white/10"
-              >
-                View Events
-              </Link>
-            </div>
-          </div>
-
-          <div className="grid gap-4 self-end md:grid-cols-3">
-            <div className="rounded-[28px] border border-white/12 bg-white/[0.05] p-5 backdrop-blur">
-              <p className="text-xs font-bold uppercase tracking-[0.24em] text-red-300">Active Sponsors</p>
-              <p className="mt-4 text-5xl font-black">{sponsors.length}</p>
-            </div>
-            <div className="rounded-[28px] border border-white/12 bg-white/[0.05] p-5 backdrop-blur">
-              <p className="text-xs font-bold uppercase tracking-[0.24em] text-red-300">Grid Layout</p>
-              <p className="mt-4 text-5xl font-black">3</p>
-              <p className="mt-2 text-sm text-white/55">Columns on desktop</p>
-            </div>
-            <div className="rounded-[28px] border border-white/12 bg-white/[0.05] p-5 backdrop-blur md:col-span-3">
-              <p className="text-xs font-bold uppercase tracking-[0.24em] text-red-300">Why It Works</p>
-              <p className="mt-4 max-w-xl text-base leading-relaxed text-white/72">
-                Clean logo presentation, clear calls to action, and enough visual weight to feel premium without burying the sponsors under effects.
-              </p>
-            </div>
           </div>
         </div>
       </section>
