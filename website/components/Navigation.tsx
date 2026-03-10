@@ -13,6 +13,7 @@ export default function Navigation() {
   const [modalMode, setModalMode] = useState<ModalMode>('contact');
   const [isSubmittingContact, setIsSubmittingContact] = useState(false);
   const [isContactSubmitted, setIsContactSubmitted] = useState(false);
+  const [contactSubmitError, setContactSubmitError] = useState<string | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -68,6 +69,7 @@ export default function Navigation() {
     setModalMode(mode);
     setIsContactSubmitted(false);
     setIsSubmittingContact(false);
+    setContactSubmitError(null);
     setIsMobileMenuOpen(false);
     setIsContactModalOpen(true);
   };
@@ -75,16 +77,46 @@ export default function Navigation() {
   const closeContactModal = () => {
     setIsContactModalOpen(false);
     setIsSubmittingContact(false);
+    setContactSubmitError(null);
   };
 
-  const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmittingContact(true);
+    setContactSubmitError(null);
 
-    window.setTimeout(() => {
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      formType: modalMode,
+      firstName: formData.get('firstName')?.toString() ?? '',
+      lastName: formData.get('lastName')?.toString() ?? '',
+      email: formData.get('email')?.toString() ?? '',
+      subject: formData.get('subject')?.toString() ?? '',
+      message: formData.get('message')?.toString() ?? ''
+    };
+
+    try {
+      const response = await fetch('/api/forms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error ?? 'Unable to send message right now.');
+      }
+
       setIsSubmittingContact(false);
       setIsContactSubmitted(true);
-    }, 900);
+      form.reset();
+    } catch (error) {
+      setIsSubmittingContact(false);
+      setContactSubmitError(error instanceof Error ? error.message : 'Unable to send message right now.');
+    }
   };
 
   const isPrayerMode = modalMode === 'prayer';
@@ -276,6 +308,12 @@ export default function Navigation() {
                   </div>
                 ) : (
                   <form key={modalMode} className="space-y-6" onSubmit={handleContactSubmit}>
+                    {contactSubmitError && (
+                      <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-800">
+                        {contactSubmitError}
+                      </div>
+                    )}
+
                     <div className="grid md:grid-cols-2 gap-5">
                       <div>
                         <label htmlFor="contactFirstName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">

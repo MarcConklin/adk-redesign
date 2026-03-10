@@ -6,6 +6,7 @@ export default function InquiryCTA() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,21 +39,54 @@ export default function InquiryCTA() {
   const closeModal = () => {
     setIsModalOpen(false);
     setIsSubmitting(false);
+    setSubmitError(null);
   };
 
   const handleOpen = () => {
     setIsSubmitted(false);
+    setSubmitError(null);
     setIsModalOpen(true);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(null);
 
-    window.setTimeout(() => {
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      formType: 'inquiry',
+      inquiryType: formData.get('inquiryType')?.toString() ?? '',
+      firstName: formData.get('firstName')?.toString() ?? '',
+      lastName: formData.get('lastName')?.toString() ?? '',
+      email: formData.get('email')?.toString() ?? '',
+      subject: formData.get('subject')?.toString() ?? '',
+      message: formData.get('message')?.toString() ?? '',
+      newsletter: formData.get('newsletter') === 'on'
+    };
+
+    try {
+      const response = await fetch('/api/forms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error ?? 'Unable to send inquiry right now.');
+      }
+
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 900);
+      form.reset();
+    } catch (error) {
+      setIsSubmitting(false);
+      setSubmitError(error instanceof Error ? error.message : 'Unable to send inquiry right now.');
+    }
   };
 
   return (
@@ -134,6 +168,12 @@ export default function InquiryCTA() {
                   </div>
                 ) : (
                   <form className="space-y-7" onSubmit={handleSubmit}>
+                    {submitError && (
+                      <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-800">
+                        {submitError}
+                      </div>
+                    )}
+
                     <div>
                       <label htmlFor="inquiryType" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
                         Inquiry Type
