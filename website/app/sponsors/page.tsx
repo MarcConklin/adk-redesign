@@ -106,16 +106,6 @@ export default function SponsorsPage() {
       <section className="relative bg-[linear-gradient(180deg,#090b10_0%,#050608_100%)] py-14 md:py-20">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.08),transparent_26%)]"></div>
         <div className="relative z-10 mx-auto max-w-7xl px-6">
-          <div className="mb-10 flex flex-col gap-4 md:mb-12 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-red-400">Sponsor Directory</p>
-              <h2 className="text-3xl font-black tracking-tight md:text-5xl">Three Columns. Clean Cards. Ready For Links.</h2>
-            </div>
-            <p className="max-w-2xl text-sm leading-relaxed text-white/62 md:text-base">
-              Sponsor logos are centered in consistent presentation cards, and each button is already structured for outbound links once you send over the URLs.
-            </p>
-          </div>
-
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {sponsors.map((sponsor, index) => (
               <SponsorCard key={sponsor.name} index={index} {...sponsor} />
