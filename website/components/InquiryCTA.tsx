@@ -1,12 +1,11 @@
 'use client';
 
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/marc@5k.co';
 
 export default function InquiryCTA() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -34,59 +33,14 @@ export default function InquiryCTA() {
     if (isModalOpen && modalRef.current) {
       modalRef.current.scrollTop = 0;
     }
-  }, [isModalOpen, isSubmitted]);
+  }, [isModalOpen]);
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setIsSubmitting(false);
-    setSubmitError(null);
   };
 
   const handleOpen = () => {
-    setIsSubmitted(false);
-    setSubmitError(null);
     setIsModalOpen(true);
-  };
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-    setSubmitError(null);
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const payload = {
-      formType: 'inquiry',
-      inquiryType: formData.get('inquiryType')?.toString() ?? '',
-      firstName: formData.get('firstName')?.toString() ?? '',
-      lastName: formData.get('lastName')?.toString() ?? '',
-      email: formData.get('email')?.toString() ?? '',
-      subject: formData.get('subject')?.toString() ?? '',
-      message: formData.get('message')?.toString() ?? '',
-      newsletter: formData.get('newsletter') === 'on'
-    };
-
-    try {
-      const response = await fetch('/api/forms', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
-      const result = (await response.json()) as { error?: string };
-
-      if (!response.ok) {
-        throw new Error(result.error ?? 'Unable to send inquiry right now.');
-      }
-
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      form.reset();
-    } catch (error) {
-      setIsSubmitting(false);
-      setSubmitError(error instanceof Error ? error.message : 'Unable to send inquiry right now.');
-    }
   };
 
   return (
@@ -152,133 +106,114 @@ export default function InquiryCTA() {
               </div>
 
               <div className="p-6 md:p-8">
-                {isSubmitted ? (
-                  <div className="rounded-xl border border-red-200 bg-red-50 p-8 text-center">
-                    <h4 className="text-2xl font-black text-black mb-3">Inquiry Sent</h4>
-                    <p className="text-gray-700 mb-6">
-                      Thanks for reaching out. We&apos;ll get back to you soon with next steps.
-                    </p>
+                <form className="space-y-7" action={FORMSUBMIT_ENDPOINT} method="POST">
+                  <input type="hidden" name="_subject" value="New Sponsor/Vendor Inquiry - ADK Automotive" />
+                  <input type="hidden" name="_captcha" value="false" />
+                  <input type="hidden" name="_template" value="table" />
+
+                  <div>
+                    <label htmlFor="inquiryType" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                      Inquiry Type
+                    </label>
+                    <select
+                      id="inquiryType"
+                      name="inquiryType"
+                      required
+                      className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                      defaultValue=""
+                    >
+                      <option value="" disabled>Select an option</option>
+                      <option value="sponsor">Sponsor</option>
+                      <option value="vendor">Vendor</option>
+                      <option value="misc">Misc. Inquiry</option>
+                    </select>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-5">
+                    <div>
+                      <label htmlFor="firstName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                        First Name
+                      </label>
+                      <input
+                        id="firstName"
+                        name="firstName"
+                        required
+                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="lastName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                        Last Name
+                      </label>
+                      <input
+                        id="lastName"
+                        name="lastName"
+                        required
+                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                      Email
+                    </label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="subject" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                      Subject
+                    </label>
+                    <input
+                      id="subject"
+                      name="subject"
+                      required
+                      className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      rows={5}
+                      className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                    />
+                  </div>
+
+                  <label className="inline-flex items-center gap-3 text-gray-700">
+                    <input type="checkbox" name="newsletter" className="h-4 w-4 accent-red-600" />
+                    Sign up for event announcements and updates
+                  </label>
+
+                  <div className="flex flex-col md:flex-row gap-4 pt-2">
+                    <button
+                      type="submit"
+                      className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-gradient-to-r from-red-700 to-red-500 text-white font-bold text-lg hover:from-red-800 hover:to-red-600 transition-colors"
+                    >
+                      Submit Inquiry
+                    </button>
                     <button
                       type="button"
                       onClick={closeModal}
-                      className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-black text-white font-semibold hover:bg-red-600 transition-colors"
+                      className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-black/20 text-black font-semibold hover:bg-black hover:text-white transition-colors"
                     >
-                      Close
+                      Cancel
                     </button>
                   </div>
-                ) : (
-                  <form className="space-y-7" onSubmit={handleSubmit}>
-                    {submitError && (
-                      <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-800">
-                        {submitError}
-                      </div>
-                    )}
-
-                    <div>
-                      <label htmlFor="inquiryType" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                        Inquiry Type
-                      </label>
-                      <select
-                        id="inquiryType"
-                        name="inquiryType"
-                        required
-                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                        defaultValue=""
-                      >
-                        <option value="" disabled>Select an option</option>
-                        <option value="sponsor">Sponsor</option>
-                        <option value="vendor">Vendor</option>
-                        <option value="misc">Misc. Inquiry</option>
-                      </select>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-5">
-                      <div>
-                        <label htmlFor="firstName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                          First Name
-                        </label>
-                        <input
-                          id="firstName"
-                          name="firstName"
-                          required
-                          className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="lastName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                          Last Name
-                        </label>
-                        <input
-                          id="lastName"
-                          name="lastName"
-                          required
-                          className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label htmlFor="email" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                        Email
-                      </label>
-                      <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="subject" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                        Subject
-                      </label>
-                      <input
-                        id="subject"
-                        name="subject"
-                        required
-                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="message" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                        Message
-                      </label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        required
-                        rows={5}
-                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                      />
-                    </div>
-
-                    <label className="inline-flex items-center gap-3 text-gray-700">
-                      <input type="checkbox" name="newsletter" className="h-4 w-4 accent-red-600" />
-                      Sign up for event announcements and updates
-                    </label>
-
-                    <div className="flex flex-col md:flex-row gap-4 pt-2">
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-gradient-to-r from-red-700 to-red-500 text-white font-bold text-lg hover:from-red-800 hover:to-red-600 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
-                      >
-                        {isSubmitting ? 'Sending...' : 'Submit Inquiry'}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={closeModal}
-                        className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-black/20 text-black font-semibold hover:bg-black hover:text-white transition-colors"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                )}
+                </form>
               </div>
             </div>
           </div>

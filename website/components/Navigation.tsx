@@ -1,7 +1,9 @@
 'use client';
 
-import { FormEvent, useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+
+const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/marc@5k.co';
 
 export default function Navigation() {
   type ModalMode = 'contact' | 'prayer';
@@ -11,9 +13,6 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<ModalMode>('contact');
-  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
-  const [isContactSubmitted, setIsContactSubmitted] = useState(false);
-  const [contactSubmitError, setContactSubmitError] = useState<string | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,56 +66,12 @@ export default function Navigation() {
 
   const openContactModal = (mode: ModalMode = 'contact') => {
     setModalMode(mode);
-    setIsContactSubmitted(false);
-    setIsSubmittingContact(false);
-    setContactSubmitError(null);
     setIsMobileMenuOpen(false);
     setIsContactModalOpen(true);
   };
 
   const closeContactModal = () => {
     setIsContactModalOpen(false);
-    setIsSubmittingContact(false);
-    setContactSubmitError(null);
-  };
-
-  const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsSubmittingContact(true);
-    setContactSubmitError(null);
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const payload = {
-      formType: modalMode,
-      firstName: formData.get('firstName')?.toString() ?? '',
-      lastName: formData.get('lastName')?.toString() ?? '',
-      email: formData.get('email')?.toString() ?? '',
-      subject: formData.get('subject')?.toString() ?? '',
-      message: formData.get('message')?.toString() ?? ''
-    };
-
-    try {
-      const response = await fetch('/api/forms', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
-      const result = (await response.json()) as { error?: string };
-
-      if (!response.ok) {
-        throw new Error(result.error ?? 'Unable to send message right now.');
-      }
-
-      setIsSubmittingContact(false);
-      setIsContactSubmitted(true);
-      form.reset();
-    } catch (error) {
-      setIsSubmittingContact(false);
-      setContactSubmitError(error instanceof Error ? error.message : 'Unable to send message right now.');
-    }
   };
 
   const isPrayerMode = modalMode === 'prayer';
@@ -125,7 +80,7 @@ export default function Navigation() {
     if (isContactModalOpen && modalRef.current) {
       modalRef.current.scrollTop = 0;
     }
-  }, [isContactModalOpen, modalMode, isContactSubmitted]);
+  }, [isContactModalOpen, modalMode]);
 
   return (
     <>
@@ -292,110 +247,96 @@ export default function Navigation() {
               </div>
 
               <div className="p-6 md:p-8">
-                {isContactSubmitted ? (
-                  <div className="rounded-xl border border-red-200 bg-red-50 p-8 text-center">
-                    <h4 className="text-2xl font-black text-black mb-3">Message Sent</h4>
-                    <p className="text-gray-700 mb-6">
-                      Thanks for reaching out. Our team will follow up soon.
-                    </p>
+                <form key={modalMode} className="space-y-6" action={FORMSUBMIT_ENDPOINT} method="POST">
+                  <input
+                    type="hidden"
+                    name="_subject"
+                    value={isPrayerMode ? 'New Prayer Request - ADK Automotive' : 'New Contact Form Submission - ADK Automotive'}
+                  />
+                  <input type="hidden" name="_captcha" value="false" />
+                  <input type="hidden" name="_template" value="table" />
+                  <input type="hidden" name="formType" value={isPrayerMode ? 'prayer' : 'contact'} />
+
+                  <div className="grid md:grid-cols-2 gap-5">
+                    <div>
+                      <label htmlFor="contactFirstName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                        First Name
+                      </label>
+                      <input
+                        id="contactFirstName"
+                        name="firstName"
+                        required
+                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="contactLastName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                        Last Name
+                      </label>
+                      <input
+                        id="contactLastName"
+                        name="lastName"
+                        required
+                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="contactEmail" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                      Email
+                    </label>
+                    <input
+                      id="contactEmail"
+                      name="email"
+                      type="email"
+                      required
+                      className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="contactSubject" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                      Subject
+                    </label>
+                    <input
+                      id="contactSubject"
+                      name="subject"
+                      required
+                      defaultValue={isPrayerMode ? 'Prayer Request' : ''}
+                      className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="contactMessage" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
+                      Message
+                    </label>
+                    <textarea
+                      id="contactMessage"
+                      name="message"
+                      required
+                      rows={5}
+                      className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+                    />
+                  </div>
+
+                  <div className="flex flex-col md:flex-row gap-4 pt-2">
+                    <button
+                      type="submit"
+                      className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-gradient-to-r from-red-700 to-red-500 text-white font-bold text-lg hover:from-red-800 hover:to-red-600 transition-colors"
+                    >
+                      {isPrayerMode ? 'Send Prayer Request' : 'Send Message'}
+                    </button>
                     <button
                       type="button"
                       onClick={closeContactModal}
-                      className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-black text-white font-semibold hover:bg-red-600 transition-colors"
+                      className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-black/20 text-black font-semibold hover:bg-black hover:text-white transition-colors"
                     >
-                      Close
+                      Cancel
                     </button>
                   </div>
-                ) : (
-                  <form key={modalMode} className="space-y-6" onSubmit={handleContactSubmit}>
-                    {contactSubmitError && (
-                      <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-800">
-                        {contactSubmitError}
-                      </div>
-                    )}
-
-                    <div className="grid md:grid-cols-2 gap-5">
-                      <div>
-                        <label htmlFor="contactFirstName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                          First Name
-                        </label>
-                        <input
-                          id="contactFirstName"
-                          name="firstName"
-                          required
-                          className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="contactLastName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                          Last Name
-                        </label>
-                        <input
-                          id="contactLastName"
-                          name="lastName"
-                          required
-                          className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label htmlFor="contactEmail" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                        Email
-                      </label>
-                      <input
-                        id="contactEmail"
-                        name="email"
-                        type="email"
-                        required
-                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="contactSubject" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                        Subject
-                      </label>
-                      <input
-                        id="contactSubject"
-                        name="subject"
-                        required
-                        defaultValue={isPrayerMode ? 'Prayer Request' : ''}
-                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="contactMessage" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                        Message
-                      </label>
-                      <textarea
-                        id="contactMessage"
-                        name="message"
-                        required
-                        rows={5}
-                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                      />
-                    </div>
-
-                    <div className="flex flex-col md:flex-row gap-4 pt-2">
-                      <button
-                        type="submit"
-                        disabled={isSubmittingContact}
-                        className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-gradient-to-r from-red-700 to-red-500 text-white font-bold text-lg hover:from-red-800 hover:to-red-600 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
-                      >
-                        {isSubmittingContact ? 'Sending...' : isPrayerMode ? 'Send Prayer Request' : 'Send Message'}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={closeContactModal}
-                        className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-black/20 text-black font-semibold hover:bg-black hover:text-white transition-colors"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                )}
+                </form>
               </div>
             </div>
           </div>
