@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
-const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/marc@5k.co';
+const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/info@adkautomotive.com';
 
 export default function Navigation() {
   type ModalMode = 'contact' | 'prayer';

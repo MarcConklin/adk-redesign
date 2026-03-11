@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/marc@5k.co';
+const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/info@adkautomotive.com';
 
 export default function InquiryCTA() {
   const [isModalOpen, setIsModalOpen] = useState(false);
