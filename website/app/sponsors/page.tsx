@@ -5,12 +5,10 @@ import { sponsors } from '@/data/sponsors';
 
 function SponsorCard({
   name,
-  logo,
   website,
   index
 }: {
   name: string;
-  logo: string;
   website: string | null;
   index: number;
 }) {
@@ -28,23 +26,23 @@ function SponsorCard({
           <span className="text-xs uppercase tracking-[0.26em] text-white/45">Official Partner</span>
         </div>
 
-        <div className="relative mb-6 flex min-h-[220px] items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.97),rgba(244,244,245,0.9))] px-6 py-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
+        <div className="relative mb-6 flex min-h-[220px] items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.97),rgba(244,244,245,0.9))] px-6 py-8 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
           <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-black/15 to-transparent"></div>
-          <div className="relative h-[120px] w-full">
-            <Image
-              src={logo}
-              alt={name}
-              fill
-              className="object-contain transition-transform duration-300 group-hover:scale-[1.03]"
-              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-            />
+          <div className="flex flex-col items-center gap-4">
+            <span className="rounded-full border border-red-200 bg-red-50 px-4 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-red-600">
+              Sponsor Spot
+            </span>
+            <div className="h-px w-16 bg-gradient-to-r from-transparent via-black/25 to-transparent"></div>
+            <p className="text-3xl font-black uppercase tracking-[0.22em] text-neutral-950 sm:text-4xl">
+              Coming Soon
+            </p>
           </div>
         </div>
 
         <div className="mb-6">
           <h2 className="text-2xl font-black tracking-tight text-white">{name}</h2>
           <p className="mt-2 text-sm leading-relaxed text-white/65">
-            Featured as part of the ADK sponsor lineup. Add their live website later and this card is ready to route there.
+            We&apos;re preparing this sponsor placement now. Check back soon for the live partner announcement.
           </p>
         </div>
 
@@ -108,7 +106,7 @@ export default function SponsorsPage() {
         <div className="relative z-10 mx-auto max-w-7xl px-6">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {sponsors.map((sponsor, index) => (
-              <SponsorCard key={sponsor.name} index={index} {...sponsor} />
+              <SponsorCard key={`${sponsor.name}-${index}`} index={index} {...sponsor} />
             ))}
           </div>
         </div>

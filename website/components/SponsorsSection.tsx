@@ -67,6 +67,23 @@ export default function SponsorsSection() {
   const sponsorsRow1 = sponsors.slice(0, 4);
   const sponsorsRow2 = sponsors.slice(4);
 
+  const renderPlaceholderCard = (index: number) => (
+    <div
+      key={index}
+      className="flex min-h-[200px] w-full items-center justify-center rounded-[28px] border border-gray-200 bg-white px-6 py-10 text-center shadow-[0_18px_50px_rgba(0,0,0,0.08)] transition-all hover:-translate-y-1 hover:border-red-500 hover:shadow-[0_22px_60px_rgba(220,38,38,0.12)]"
+    >
+      <div className="flex flex-col items-center gap-4">
+        <span className="rounded-full border border-red-200 bg-red-50 px-4 py-1 text-[11px] font-bold uppercase tracking-[0.28em] text-red-600">
+          Sponsor Slot
+        </span>
+        <div className="h-px w-16 bg-gradient-to-r from-transparent via-black/20 to-transparent"></div>
+        <p className="text-2xl font-bold uppercase tracking-[0.22em] text-black sm:text-3xl">
+          Coming Soon
+        </p>
+      </div>
+    </div>
+  );
+
   return (
     <section
       ref={sectionRef}
@@ -87,61 +104,45 @@ export default function SponsorsSection() {
       {/* White background base */}
       <div className="absolute inset-0 bg-white -z-10"></div>
 
-      <div className="max-w-7xl mx-auto px-6 mb-20 text-center relative z-10">
+      <div className="relative z-10 mx-auto mb-14 max-w-7xl px-6 text-center md:mb-20">
         <p className="text-xs uppercase tracking-[0.3em] text-gray-500 mb-6 font-bold">Our Partners</p>
-        <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-black leading-[1.1] tracking-tight">Built on<br />Trusted Partnerships</h2>
+        <h2 className="mb-8 text-4xl font-bold leading-[1.1] tracking-tight text-black sm:text-5xl md:text-6xl lg:text-7xl">Built on<br />Trusted Partnerships</h2>
         <div className="w-24 h-1 bg-black mx-auto mb-8"></div>
-        <p className="text-xl text-gray-700 max-w-3xl mx-auto font-light">
-          We're proud to partner with industry-leading brands who share our passion for automotive excellence
+        <p className="mx-auto max-w-3xl text-base font-light text-gray-700 sm:text-lg md:text-xl">
+          We&apos;re preparing this section now. Featured sponsor spots will appear here soon.
         </p>
       </div>
 
+      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-4 px-6 md:hidden">
+        {sponsors.map((_, index) => renderPlaceholderCard(index))}
+      </div>
+
       {/* First Marquee Row */}
-      <div ref={marqueeRef1} className="relative overflow-hidden py-12 border-t border-y border-gray-200">
+      <div ref={marqueeRef1} className="relative hidden overflow-hidden border-t border-y border-gray-200 py-12 md:block">
         <div className="marquee-content flex gap-20 whitespace-nowrap">
-          {[...sponsorsRow1, ...sponsorsRow1].map((sponsor, i) => (
-            <div
-              key={i}
-              className="inline-flex items-center justify-center p-8 bg-white border border-gray-200 hover:border-red-600 hover:shadow-xl transition-all min-w-[320px]"
-            >
-              <div className="relative w-full h-[140px]">
-                <Image
-                  src={sponsor.logo}
-                  alt={sponsor.name}
-                  fill
-                  className="object-contain transition-all"
-                />
-              </div>
+          {[...sponsorsRow1, ...sponsorsRow1].map((_, i) => (
+            <div key={i} className="inline-flex min-w-[320px] max-w-[360px] flex-1">
+              {renderPlaceholderCard(i)}
             </div>
           ))}
         </div>
       </div>
 
       {/* Second Marquee Row (Opposite Direction) */}
-      <div ref={marqueeRef2} className="relative overflow-hidden py-12 border-b border-gray-200">
+      <div ref={marqueeRef2} className="relative hidden overflow-hidden border-b border-gray-200 py-12 md:block">
         <div className="marquee-content flex gap-20 whitespace-nowrap">
-          {[...sponsorsRow2, ...sponsorsRow2].map((sponsor, i) => (
-            <div
-              key={i}
-              className="inline-flex items-center justify-center p-8 bg-white border border-gray-200 hover:border-red-600 hover:shadow-xl transition-all min-w-[320px]"
-            >
-              <div className="relative w-full h-[140px]">
-                <Image
-                  src={sponsor.logo}
-                  alt={sponsor.name}
-                  fill
-                  className="object-contain transition-all"
-                />
-              </div>
+          {[...sponsorsRow2, ...sponsorsRow2].map((_, i) => (
+            <div key={i} className="inline-flex min-w-[320px] max-w-[360px] flex-1">
+              {renderPlaceholderCard(i + sponsorsRow1.length)}
             </div>
           ))}
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 mt-20 text-center relative z-10">
+      <div className="relative z-10 mx-auto mt-12 max-w-7xl px-6 text-center md:mt-20">
         <Link
           href="/sponsors"
-          className="inline-block px-10 py-4 bg-black text-white font-semibold text-lg hover:bg-red-600 transition-all hover:scale-105"
+          className="inline-block px-8 py-4 text-base font-semibold text-white transition-all hover:scale-105 hover:bg-red-600 bg-black md:px-10 md:text-lg"
         >
           Become a Sponsor
         </Link>

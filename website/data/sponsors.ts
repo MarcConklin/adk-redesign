@@ -1,53 +1,43 @@
 export type Sponsor = {
   name: string;
-  logo: string;
   website: string | null;
 };
 
 export const sponsors: Sponsor[] = [
   {
-    name: 'Foxy Coatings',
-    logo: '/images/sponsor-0.png',
+    name: 'Coming Soon',
     website: null
   },
   {
-    name: 'Manheim Imports',
-    logo: '/images/Manheim+Imports+Logo.png',
+    name: 'Coming Soon',
     website: null
   },
   {
-    name: 'KP Elite',
-    logo: '/images/KP+Elite.jpg',
+    name: 'Coming Soon',
     website: null
   },
   {
-    name: 'Bush Auto Group',
-    logo: '/images/BushAutoGroup+Logo_Collision&Detail.png',
+    name: 'Coming Soon',
     website: null
   },
   {
-    name: 'CarVault',
-    logo: '/images/CarVault_logo_lockup_tm_blue_final_2500px.png',
+    name: 'Coming Soon',
     website: null
   },
   {
-    name: 'JSG Graphics',
-    logo: '/images/JSG-Logo.png',
+    name: 'Coming Soon',
     website: null
   },
   {
-    name: 'TPDCW',
-    logo: '/images/Stacked+TPDCW.png',
+    name: 'Coming Soon',
     website: null
   },
   {
-    name: 'Sun Protectors Ephrata',
-    logo: '/images/Sun+Protectors+-+Ephrata.png',
+    name: 'Coming Soon',
     website: null
   },
   {
-    name: 'LSC',
-    logo: '/images/lsc-removebg-preview.png',
+    name: 'Coming Soon',
     website: null
   }
 ];
