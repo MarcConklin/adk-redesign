@@ -103,6 +103,7 @@ export default function Navigation() {
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white">
           <a href="/events" className="hover:text-gray-300 transition-colors">Events</a>
           <a href="/about" className="hover:text-gray-300 transition-colors">About</a>
+          <a href="/gallery" className="hover:text-gray-300 transition-colors">Gallery</a>
           <a href="/sponsors" className="hover:text-gray-300 transition-colors">Sponsors</a>
           <button onClick={() => openContactModal('contact')} className="hover:text-gray-300 transition-colors">Contact</button>
           <button
@@ -179,6 +180,13 @@ export default function Navigation() {
               className="text-white text-3xl font-bold hover:text-red-500 transition-colors tracking-tight"
             >
               Sponsors
+            </a>
+            <a
+              href="/gallery"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-white text-3xl font-bold hover:text-red-500 transition-colors tracking-tight"
+            >
+              Gallery
             </a>
             <button
               onClick={() => openContactModal('contact')}
