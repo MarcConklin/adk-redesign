@@ -70,14 +70,14 @@ export default function SponsorsSection() {
   const renderPlaceholderCard = (index: number) => (
     <div
       key={index}
-      className="flex min-h-[200px] w-full items-center justify-center rounded-[28px] border border-gray-200 bg-white px-6 py-10 text-center shadow-[0_18px_50px_rgba(0,0,0,0.08)] transition-all hover:-translate-y-1 hover:border-red-500 hover:shadow-[0_22px_60px_rgba(220,38,38,0.12)]"
+      className="flex min-h-[160px] w-full items-center justify-center rounded-[24px] border border-gray-200 bg-white px-4 py-8 text-center shadow-[0_18px_50px_rgba(0,0,0,0.08)] transition-all hover:-translate-y-1 hover:border-red-500 hover:shadow-[0_22px_60px_rgba(220,38,38,0.12)] sm:min-h-[200px] sm:rounded-[28px] sm:px-6 sm:py-10"
     >
-      <div className="flex flex-col items-center gap-4">
-        <span className="rounded-full border border-red-200 bg-red-50 px-4 py-1 text-[11px] font-bold uppercase tracking-[0.28em] text-red-600">
+      <div className="flex flex-col items-center gap-3 sm:gap-4">
+        <span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-red-600 sm:px-4 sm:text-[11px] sm:tracking-[0.28em]">
           Sponsor Slot
         </span>
         <div className="h-px w-16 bg-gradient-to-r from-transparent via-black/20 to-transparent"></div>
-        <p className="text-2xl font-bold uppercase tracking-[0.22em] text-black sm:text-3xl">
+        <p className="text-lg font-bold uppercase tracking-[0.14em] text-black sm:text-3xl sm:tracking-[0.22em]">
           Coming Soon
         </p>
       </div>
@@ -113,7 +113,7 @@ export default function SponsorsSection() {
         </p>
       </div>
 
-      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-4 px-6 md:hidden">
+      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 md:hidden">
         {sponsors.map((_, index) => renderPlaceholderCard(index))}
       </div>
 
