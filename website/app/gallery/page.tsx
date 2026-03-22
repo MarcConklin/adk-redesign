@@ -1,16 +1,10 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { galleryImages } from '@/data/galleryImages';
-
-const tileClasses = [
-  'aspect-[4/5]',
-  'aspect-[1/1]',
-  'aspect-[3/4]',
-  'aspect-[5/4]',
-  'aspect-[4/3]',
-  'aspect-[16/10]'
-];
 
 function formatLabel(fileName: string) {
   return fileName
@@ -22,7 +16,40 @@ function formatLabel(fileName: string) {
 }
 
 export default function GalleryPage() {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const heroImage = galleryImages[0] ? `/gallery/${encodeURIComponent(galleryImages[0])}` : '/images/DJI_0175_Original+2.jpg';
+  const selectedFileName = selectedIndex !== null ? galleryImages[selectedIndex] : null;
+  const selectedImage = selectedFileName ? `/gallery/${encodeURIComponent(selectedFileName)}` : null;
+
+  useEffect(() => {
+    if (selectedIndex === null) {
+      document.body.style.overflow = 'unset';
+      return;
+    }
+
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setSelectedIndex(null);
+      }
+
+      if (event.key === 'ArrowRight') {
+        setSelectedIndex((current) => (current === null ? current : (current + 1) % galleryImages.length));
+      }
+
+      if (event.key === 'ArrowLeft') {
+        setSelectedIndex((current) => (current === null ? current : (current - 1 + galleryImages.length) % galleryImages.length));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedIndex]);
 
   return (
     <main className="relative min-h-screen bg-[#06070a] text-white">
@@ -65,41 +92,97 @@ export default function GalleryPage() {
       <section className="relative bg-[linear-gradient(180deg,#090b10_0%,#050608_100%)] py-10 md:py-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.08),transparent_24%)]"></div>
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-2 sm:gap-3 md:grid-cols-3 md:gap-4 xl:grid-cols-4">
             {galleryImages.map((fileName, index) => {
               const src = `/gallery/${encodeURIComponent(fileName)}`;
-              const label = formatLabel(fileName);
 
               return (
-                <a
+                <button
                   key={fileName}
-                  href={src}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block"
+                  type="button"
+                  onClick={() => setSelectedIndex(index)}
+                  className="group block overflow-hidden rounded-[18px] bg-black text-left"
+                  aria-label={`Open ${formatLabel(fileName)}`}
                 >
-                  <article className="overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] shadow-[0_20px_60px_rgba(0,0,0,0.28)] transition-transform duration-300 group-hover:-translate-y-1">
-                    <div className={`relative ${tileClasses[index % tileClasses.length]} overflow-hidden`}>
-                      <Image
-                        src={src}
-                        alt={label}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                        sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                      />
-                    </div>
-                    <div className="border-t border-white/8 px-4 py-3">
-                      <p className="truncate text-[11px] font-medium uppercase tracking-[0.18em] text-white/55 md:text-xs">
-                        {label}
-                      </p>
-                    </div>
-                  </article>
-                </a>
+                  <div className="relative aspect-square overflow-hidden">
+                    <Image
+                      src={src}
+                      alt={formatLabel(fileName)}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                      sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                    />
+                    <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/12"></div>
+                  </div>
+                </button>
               );
             })}
           </div>
         </div>
       </section>
+
+      {selectedImage && selectedFileName && (
+        <div
+          className="fixed inset-0 z-[2147483000] bg-black/94 p-4 backdrop-blur-sm md:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-label={formatLabel(selectedFileName)}
+          onClick={() => setSelectedIndex(null)}
+        >
+          <div className="flex h-full w-full items-center justify-center">
+            <button
+              type="button"
+              onClick={() => setSelectedIndex(null)}
+              className="absolute right-4 top-4 z-20 h-12 w-12 rounded-full bg-white/10 text-3xl leading-none text-white transition-colors hover:bg-white/20 md:right-8 md:top-8"
+              aria-label="Close gallery image"
+            >
+              ×
+            </button>
+
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                setSelectedIndex((current) => (current === null ? current : (current - 1 + galleryImages.length) % galleryImages.length));
+              }}
+              className="absolute left-4 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-3xl text-white transition-colors hover:bg-white/20 md:left-8"
+              aria-label="Previous image"
+            >
+              ‹
+            </button>
+
+            <div
+              className="relative h-full w-full max-w-6xl"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <Image
+                src={selectedImage}
+                alt={formatLabel(selectedFileName)}
+                fill
+                className="object-contain"
+                sizes="100vw"
+                priority
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                setSelectedIndex((current) => (current === null ? current : (current + 1) % galleryImages.length));
+              }}
+              className="absolute right-4 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-3xl text-white transition-colors hover:bg-white/20 md:right-8"
+              aria-label="Next image"
+            >
+              ›
+            </button>
+
+            <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2 rounded-full bg-black/55 px-4 py-2 text-center text-xs uppercase tracking-[0.22em] text-white/80 md:bottom-8">
+              {selectedIndex !== null ? `${selectedIndex + 1} / ${galleryImages.length}` : null}
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </main>

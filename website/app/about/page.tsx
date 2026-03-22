@@ -154,7 +154,7 @@ export default function AboutPage() {
               Click a pillar and the deck flips to the front card, showing exactly how ADK delivers impact through purpose, experience, and community.
             </p>
 
-            <div className="space-y-3">
+            <div className="hidden space-y-3 lg:block">
               {pillars.map((pillar, index) => {
                 const isActive = index === activeIndex;
                 return (
@@ -179,7 +179,45 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="relative h-[740px] md:h-[810px]">
+          <div className="space-y-5 lg:hidden">
+              {pillars.map((pillar, index) => (
+                <article
+                  key={pillar.id}
+                  className="overflow-hidden rounded-3xl border border-white/15 bg-[#1a1b20] shadow-[0_24px_60px_rgba(0,0,0,0.34)]"
+                >
+                  <div className="relative h-[260px]">
+                    <Image
+                      src={pillar.image}
+                      alt={pillar.title}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+                    <p className="absolute left-6 right-6 bottom-5 text-white text-xl font-semibold leading-tight">
+                      {pillar.quote}
+                    </p>
+                  </div>
+
+                  <div className="p-6">
+                    <p className="text-xs uppercase tracking-[0.24em] text-red-300 mb-3">{pillar.label}</p>
+                    <h3 className="text-3xl font-black leading-tight text-white">{pillar.title}</h3>
+                    <p className="mt-4 text-white/85 text-lg leading-relaxed font-light">
+                      {pillar.summary}
+                    </p>
+                    <div className="mt-6 space-y-3">
+                      {pillar.points.map((point) => (
+                        <div key={point} className="flex items-start gap-3">
+                          <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-red-500"></span>
+                          <p className="text-white/78 text-base">{point}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              ))}
+          </div>
+
+          <div className="relative hidden h-[740px] lg:block lg:h-[810px]">
             {orderedPillars.map((pillar, stackPosition) => {
               const isFront = stackPosition === 0;
               const rotation = stackPosition === 0 ? -2 : stackPosition === 1 ? 3.2 : 7;
