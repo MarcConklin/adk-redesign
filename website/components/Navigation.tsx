@@ -2,17 +2,13 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-
-const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/info@adkautomotive.com';
+import ContactForm from '@/components/ContactForm';
 
 export default function Navigation() {
-  type ModalMode = 'contact' | 'prayer';
-
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState<ModalMode>('contact');
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -64,8 +60,7 @@ export default function Navigation() {
     return () => window.removeEventListener('keydown', handleEscape);
   }, [isContactModalOpen]);
 
-  const openContactModal = (mode: ModalMode = 'contact') => {
-    setModalMode(mode);
+  const openPrayerModal = () => {
     setIsMobileMenuOpen(false);
     setIsContactModalOpen(true);
   };
@@ -74,13 +69,11 @@ export default function Navigation() {
     setIsContactModalOpen(false);
   };
 
-  const isPrayerMode = modalMode === 'prayer';
-
   useEffect(() => {
     if (isContactModalOpen && modalRef.current) {
       modalRef.current.scrollTop = 0;
     }
-  }, [isContactModalOpen, modalMode]);
+  }, [isContactModalOpen]);
 
   return (
     <>
@@ -105,9 +98,9 @@ export default function Navigation() {
           <a href="/about" className="hover:text-gray-300 transition-colors">About</a>
           <a href="/gallery" className="hover:text-gray-300 transition-colors">Gallery</a>
           <a href="/sponsors" className="hover:text-gray-300 transition-colors">Sponsors</a>
-          <button onClick={() => openContactModal('contact')} className="hover:text-gray-300 transition-colors">Contact</button>
+          <a href="/contact" className="hover:text-gray-300 transition-colors">Contact</a>
           <button
-            onClick={() => openContactModal('prayer')}
+            onClick={openPrayerModal}
             className="bg-red-600 text-white px-6 py-3 rounded-full hover:bg-red-700 transition-all hover:scale-105 font-bold shadow-lg shadow-red-600/30"
           >
             How Can We Pray For You?
@@ -188,17 +181,18 @@ export default function Navigation() {
             >
               Gallery
             </a>
-            <button
-              onClick={() => openContactModal('contact')}
+            <a
+              href="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
               className="text-white text-3xl font-bold hover:text-red-500 transition-colors tracking-tight"
             >
               Contact
-            </button>
+            </a>
 
             {/* Action Buttons */}
             <div className="flex flex-col gap-4 mt-12 w-full max-w-sm">
               <button
-                onClick={() => openContactModal('prayer')}
+                onClick={openPrayerModal}
                 className="bg-red-600 text-white px-8 py-5 rounded-full hover:bg-red-700 transition-all font-bold shadow-lg shadow-red-600/30 w-full text-lg"
               >
                 How Can We Pray For You?
@@ -238,10 +232,10 @@ export default function Navigation() {
               <div className="sticky top-0 z-10 flex items-start justify-between gap-4 p-6 md:p-8 border-b border-black/10 bg-white/90 backdrop-blur">
                 <div>
                   <p className="text-xs uppercase tracking-[0.28em] text-red-600 font-bold mb-3">
-                    {isPrayerMode ? 'Prayer Request' : 'Contact Us'}
+                    Prayer Request
                   </p>
                   <h3 className="text-2xl md:text-4xl font-black uppercase text-black leading-tight">
-                    {isPrayerMode ? 'How Can We Pray For You?' : 'Send A Message'}
+                    How Can We Pray For You?
                   </h3>
                 </div>
                 <button
@@ -255,96 +249,7 @@ export default function Navigation() {
               </div>
 
               <div className="p-6 md:p-8">
-                <form key={modalMode} className="space-y-6" action={FORMSUBMIT_ENDPOINT} method="POST">
-                  <input
-                    type="hidden"
-                    name="_subject"
-                    value={isPrayerMode ? 'New Prayer Request - ADK Automotive' : 'New Contact Form Submission - ADK Automotive'}
-                  />
-                  <input type="hidden" name="_captcha" value="false" />
-                  <input type="hidden" name="_template" value="table" />
-                  <input type="hidden" name="formType" value={isPrayerMode ? 'prayer' : 'contact'} />
-
-                  <div className="grid md:grid-cols-2 gap-5">
-                    <div>
-                      <label htmlFor="contactFirstName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                        First Name
-                      </label>
-                      <input
-                        id="contactFirstName"
-                        name="firstName"
-                        required
-                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="contactLastName" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                        Last Name
-                      </label>
-                      <input
-                        id="contactLastName"
-                        name="lastName"
-                        required
-                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="contactEmail" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                      Email
-                    </label>
-                    <input
-                      id="contactEmail"
-                      name="email"
-                      type="email"
-                      required
-                      className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="contactSubject" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                      Subject
-                    </label>
-                    <input
-                      id="contactSubject"
-                      name="subject"
-                      required
-                      defaultValue={isPrayerMode ? 'Prayer Request' : ''}
-                      className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="contactMessage" className="block text-sm uppercase tracking-wider font-bold text-black mb-2">
-                      Message
-                    </label>
-                    <textarea
-                      id="contactMessage"
-                      name="message"
-                      required
-                      rows={5}
-                      className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-                    />
-                  </div>
-
-                  <div className="flex flex-col md:flex-row gap-4 pt-2">
-                    <button
-                      type="submit"
-                      className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-gradient-to-r from-red-700 to-red-500 text-white font-bold text-lg hover:from-red-800 hover:to-red-600 transition-colors"
-                    >
-                      {isPrayerMode ? 'Send Prayer Request' : 'Send Message'}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={closeContactModal}
-                      className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-black/20 text-black font-semibold hover:bg-black hover:text-white transition-colors"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </form>
+                <ContactForm mode="prayer" idPrefix="prayer" onCancel={closeContactModal} />
               </div>
             </div>
           </div>
