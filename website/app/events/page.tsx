@@ -48,11 +48,11 @@ const events: EventItem[] = [
     isHolidayFeature: true
   },
   {
-    title: 'Cars and Coffee',
-    category: 'Cars and Coffee',
+    title: 'Supercars at Sunset',
+    category: 'Supercars at Sunset',
     date: '2026-07-25',
     location: 'Calvary Chapel, Chester Springs PA',
-    time: '9:00 AM to 12:00 PM',
+    time: '5:00 PM to 9:00 PM',
     image: freshGallery[3]
   },
   {
