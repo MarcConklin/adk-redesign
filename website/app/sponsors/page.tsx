@@ -6,10 +6,16 @@ import { sponsors } from '@/data/sponsors';
 function SponsorCard({
   name,
   website,
+  logo,
+  logoFit,
+  description,
   index
 }: {
   name: string;
   website: string | null;
+  logo: string | null;
+  logoFit?: 'cover' | 'contain';
+  description?: string;
   index: number;
 }) {
   const buttonClassName =
@@ -26,23 +32,34 @@ function SponsorCard({
           <span className="text-xs uppercase tracking-[0.26em] text-white/45">Official Partner</span>
         </div>
 
-        <div className="relative mb-6 flex min-h-[220px] items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.97),rgba(244,244,245,0.9))] px-6 py-8 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
+        <div className="relative mb-6 overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.97),rgba(244,244,245,0.9))] p-5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
           <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-black/15 to-transparent"></div>
-          <div className="flex flex-col items-center gap-4">
-            <span className="rounded-full border border-red-200 bg-red-50 px-4 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-red-600">
-              Sponsor Spot
-            </span>
-            <div className="h-px w-16 bg-gradient-to-r from-transparent via-black/25 to-transparent"></div>
-            <p className="text-3xl font-black uppercase tracking-[0.22em] text-neutral-950 sm:text-4xl">
-              Coming Soon
-            </p>
-          </div>
+          {logo ? (
+            <div className="relative aspect-square w-full overflow-hidden rounded-[22px] border border-black/8 shadow-[0_16px_40px_rgba(0,0,0,0.14)]">
+              <Image
+                src={logo}
+                alt={`${name} logo`}
+                fill
+                className={logoFit === 'contain' ? 'object-contain p-4' : 'object-cover'}
+              />
+            </div>
+          ) : (
+            <div className="flex aspect-square w-full flex-col items-center justify-center rounded-[22px] border border-red-200 bg-red-50/60 px-4 shadow-[0_16px_40px_rgba(0,0,0,0.08)]">
+              <span className="rounded-full border border-red-200 bg-white px-4 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-red-600">
+                Sponsor Spot
+              </span>
+              <div className="my-4 h-px w-16 bg-gradient-to-r from-transparent via-black/25 to-transparent"></div>
+              <p className="text-2xl font-black uppercase tracking-[0.18em] text-neutral-950 sm:text-3xl">
+                Coming Soon
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="mb-6">
           <h2 className="text-2xl font-black tracking-tight text-white">{name}</h2>
           <p className="mt-2 text-sm leading-relaxed text-white/65">
-            We&apos;re preparing this sponsor placement now. Check back soon for the live partner announcement.
+            {description ?? 'We&apos;re preparing this sponsor placement now. Check back soon for the live partner announcement.'}
           </p>
         </div>
 

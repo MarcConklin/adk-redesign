@@ -35,7 +35,7 @@ const events: EventItem[] = [
     category: 'Supercars at Sunset',
     date: '2026-05-31',
     location: 'Classic Auto Mall, Morgantown PA',
-    time: '5:00 PM to 9:00 PM',
+    time: '6:00 PM to 10:00 PM',
     image: '/images/_DSC3551_Original.jpg'
   },
   {
@@ -43,7 +43,7 @@ const events: EventItem[] = [
     category: 'Supercars at Sunset',
     date: '2026-07-11',
     location: 'Classic Auto Mall, Morgantown PA',
-    time: '5:00 PM to 9:00 PM',
+    time: '6:00 PM to 10:00 PM',
     image: '/images/ADKSupercarShow1-20.JPG',
     isHolidayFeature: true
   },
@@ -52,7 +52,7 @@ const events: EventItem[] = [
     category: 'Supercars at Sunset',
     date: '2026-07-25',
     location: 'Calvary Chapel, Chester Springs PA',
-    time: '5:00 PM to 9:00 PM',
+    time: '5:00 PM to 8:30 PM',
     image: freshGallery[3]
   },
   {
@@ -76,7 +76,7 @@ const events: EventItem[] = [
     category: 'Supercars at Sunset',
     date: '2026-09-26',
     location: 'Chester County Airport, Coatesville PA',
-    time: '3:00 PM to 8:00 PM',
+    time: '3:00 PM to 7:00 PM',
     image: '/images/DJI_0810.JPG'
   },
   {
@@ -84,7 +84,7 @@ const events: EventItem[] = [
     category: 'Road Rally',
     date: '2026-10-17',
     location: 'Destinations TBD',
-    time: '4:00 AM to 7:00 PM',
+    time: '5:00 PM to 9:00 PM',
     image: '/images/_DSC3132_Original+2.jpg'
   },
   {
@@ -98,9 +98,9 @@ const events: EventItem[] = [
   {
     title: 'Road Rally',
     category: 'Road Rally',
-    date: '2026-11-22',
+    date: '2026-11-21',
     location: 'Destinations TBD',
-    time: '8:00 AM to 12:00 PM',
+    time: '5:00 PM to 9:00 PM',
     image: '/images/ADKRoadRallyII2024-56.jpeg'
   }
 ];

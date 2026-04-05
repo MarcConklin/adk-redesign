@@ -67,20 +67,43 @@ export default function SponsorsSection() {
   const sponsorsRow1 = sponsors.slice(0, 4);
   const sponsorsRow2 = sponsors.slice(4);
 
-  const renderPlaceholderCard = (index: number) => (
+  const renderPlaceholderCard = (
+    name: string,
+    logo: string | null,
+    logoFit: 'cover' | 'contain' | undefined,
+    index: number
+  ) => (
     <div
       key={index}
       className="flex min-h-[160px] w-full items-center justify-center rounded-[24px] border border-gray-200 bg-white px-4 py-8 text-center shadow-[0_18px_50px_rgba(0,0,0,0.08)] transition-all hover:-translate-y-1 hover:border-red-500 hover:shadow-[0_22px_60px_rgba(220,38,38,0.12)] sm:min-h-[200px] sm:rounded-[28px] sm:px-6 sm:py-10"
     >
-      <div className="flex flex-col items-center gap-3 sm:gap-4">
-        <span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-red-600 sm:px-4 sm:text-[11px] sm:tracking-[0.28em]">
-          Sponsor Slot
-        </span>
-        <div className="h-px w-16 bg-gradient-to-r from-transparent via-black/20 to-transparent"></div>
-        <p className="text-lg font-bold uppercase tracking-[0.14em] text-black sm:text-3xl sm:tracking-[0.22em]">
-          Coming Soon
-        </p>
-      </div>
+      {logo ? (
+        <div className="flex w-full flex-col items-center gap-4">
+          <div className="relative aspect-square w-full max-w-[132px] overflow-hidden rounded-[18px] border border-black/8 shadow-[0_10px_30px_rgba(0,0,0,0.12)] sm:max-w-[156px]">
+            <Image
+              src={logo}
+              alt={`${name} logo`}
+              fill
+              className={logoFit === 'contain' ? 'object-contain p-3' : 'object-cover'}
+            />
+          </div>
+          <p className="text-sm font-bold uppercase tracking-[0.18em] text-black sm:text-base">
+            {name}
+          </p>
+        </div>
+      ) : (
+        <div className="flex w-full flex-col items-center gap-4">
+          <div className="flex aspect-square w-full max-w-[132px] flex-col items-center justify-center rounded-[18px] border border-red-200 bg-red-50/55 px-3 shadow-[0_10px_30px_rgba(0,0,0,0.08)] sm:max-w-[156px]">
+            <span className="rounded-full border border-red-200 bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-red-600 sm:px-4 sm:text-[11px] sm:tracking-[0.28em]">
+              Sponsor Slot
+            </span>
+            <div className="my-3 h-px w-16 bg-gradient-to-r from-transparent via-black/20 to-transparent"></div>
+            <p className="text-base font-bold uppercase tracking-[0.14em] text-black sm:text-lg sm:tracking-[0.2em]">
+              Coming Soon
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -109,20 +132,20 @@ export default function SponsorsSection() {
         <h2 className="mb-8 text-4xl font-bold leading-[1.1] tracking-tight text-black sm:text-5xl md:text-6xl lg:text-7xl">Built on<br />Trusted Partnerships</h2>
         <div className="w-24 h-1 bg-black mx-auto mb-8"></div>
         <p className="mx-auto max-w-3xl text-base font-light text-gray-700 sm:text-lg md:text-xl">
-          We&apos;re preparing this section now. Featured sponsor spots will appear here soon.
+          Featured partners live here, with more sponsor spots opening soon.
         </p>
       </div>
 
       <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 md:hidden">
-        {sponsors.map((_, index) => renderPlaceholderCard(index))}
+        {sponsors.map((sponsor, index) => renderPlaceholderCard(sponsor.name, sponsor.logo, sponsor.logoFit, index))}
       </div>
 
       {/* First Marquee Row */}
       <div ref={marqueeRef1} className="relative hidden overflow-hidden border-t border-y border-gray-200 py-12 md:block">
         <div className="marquee-content flex gap-20 whitespace-nowrap">
-          {[...sponsorsRow1, ...sponsorsRow1].map((_, i) => (
+          {[...sponsorsRow1, ...sponsorsRow1].map((sponsor, i) => (
             <div key={i} className="inline-flex min-w-[320px] max-w-[360px] flex-1">
-              {renderPlaceholderCard(i)}
+              {renderPlaceholderCard(sponsor.name, sponsor.logo, sponsor.logoFit, i)}
             </div>
           ))}
         </div>
@@ -131,9 +154,9 @@ export default function SponsorsSection() {
       {/* Second Marquee Row (Opposite Direction) */}
       <div ref={marqueeRef2} className="relative hidden overflow-hidden border-b border-gray-200 py-12 md:block">
         <div className="marquee-content flex gap-20 whitespace-nowrap">
-          {[...sponsorsRow2, ...sponsorsRow2].map((_, i) => (
+          {[...sponsorsRow2, ...sponsorsRow2].map((sponsor, i) => (
             <div key={i} className="inline-flex min-w-[320px] max-w-[360px] flex-1">
-              {renderPlaceholderCard(i + sponsorsRow1.length)}
+              {renderPlaceholderCard(sponsor.name, sponsor.logo, sponsor.logoFit, i + sponsorsRow1.length)}
             </div>
           ))}
         </div>
