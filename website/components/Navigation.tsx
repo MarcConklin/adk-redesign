@@ -106,7 +106,7 @@ export default function Navigation() {
             How Can We Pray For You?
           </button>
           <a
-            href="https://renndvous.com/event/adk-road-rally-august/"
+            href="https://renndvous.com/event/supercars-at-sunset-2/"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-white text-black px-8 py-3 rounded-full hover:bg-gray-100 transition-all hover:scale-105 font-semibold"
@@ -198,7 +198,7 @@ export default function Navigation() {
                 How Can We Pray For You?
               </button>
               <a
-                href="https://renndvous.com/event/adk-road-rally-august/"
+                href="https://renndvous.com/event/supercars-at-sunset-2/"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}

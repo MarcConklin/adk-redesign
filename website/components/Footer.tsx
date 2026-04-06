@@ -77,7 +77,7 @@ export default function Footer() {
               <li><a href="/gallery" className="hover:text-red-600 transition-colors font-light">Gallery</a></li>
               <li><a href="/sponsors" className="hover:text-red-600 transition-colors font-light">Sponsors</a></li>
               <li><a href="/#inquiry" className="hover:text-red-600 transition-colors font-light">Become a Vendor</a></li>
-              <li><a href="https://renndvous.com/event/adk-road-rally-august/" target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition-colors font-light">Buy Tickets</a></li>
+              <li><a href="https://renndvous.com/event/supercars-at-sunset-2/" target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition-colors font-light">Buy Tickets</a></li>
             </ul>
           </div>
 
