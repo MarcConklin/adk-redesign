@@ -73,7 +73,7 @@ export const sponsors: Sponsor[] = [
   {
     name: 'Bumpers Etc. Auto Body & Collision',
     website: 'https://bumpersetc.com/',
-    logo: '/sponsors/bumpers-etc-auto-body-collision.webp',
+    logo: '/sponsors/bumpers-etc-logo-final-6.png',
     logoFit: 'contain',
     description: 'Family-owned auto body, collision repair, and ceramic coating services.'
   },
