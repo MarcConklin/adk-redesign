@@ -40,40 +40,42 @@ export default function ContactForm({
       <div className="grid gap-5 md:grid-cols-2">
         <div>
           <label htmlFor={firstNameId} className="mb-2 block text-sm font-bold uppercase tracking-wider text-black">
-            First Name
+            First Name{isPrayerMode && <span className="ml-1 font-normal normal-case tracking-normal text-black/40">(Optional)</span>}
           </label>
           <input
             id={firstNameId}
             name="firstName"
-            required
+            required={!isPrayerMode}
             className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
           />
         </div>
         <div>
           <label htmlFor={lastNameId} className="mb-2 block text-sm font-bold uppercase tracking-wider text-black">
-            Last Name
+            Last Name{isPrayerMode && <span className="ml-1 font-normal normal-case tracking-normal text-black/40">(Optional)</span>}
           </label>
           <input
             id={lastNameId}
             name="lastName"
-            required
+            required={!isPrayerMode}
             className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
           />
         </div>
       </div>
 
-      <div>
-        <label htmlFor={emailId} className="mb-2 block text-sm font-bold uppercase tracking-wider text-black">
-          Email
-        </label>
-        <input
-          id={emailId}
-          name="email"
-          type="email"
-          required
-          className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
-        />
-      </div>
+      {!isPrayerMode && (
+        <div>
+          <label htmlFor={emailId} className="mb-2 block text-sm font-bold uppercase tracking-wider text-black">
+            Email
+          </label>
+          <input
+            id={emailId}
+            name="email"
+            type="email"
+            required
+            className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 text-black outline-none shadow-sm focus:border-red-600 focus:ring-2 focus:ring-red-200"
+          />
+        </div>
+      )}
 
       <div>
         <label htmlFor={subjectId} className="mb-2 block text-sm font-bold uppercase tracking-wider text-black">

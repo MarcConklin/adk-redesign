@@ -64,8 +64,9 @@ export default function SponsorsSection() {
     return () => ctx.revert();
   }, []);
 
-  const sponsorsRow1 = sponsors.slice(0, 4);
-  const sponsorsRow2 = sponsors.slice(4);
+  const half = Math.ceil(sponsors.length / 2);
+  const sponsorsRow1 = sponsors.slice(0, half);
+  const sponsorsRow2 = sponsors.slice(half);
 
   const renderPlaceholderCard = (
     name: string,
@@ -142,7 +143,7 @@ export default function SponsorsSection() {
 
       {/* First Marquee Row */}
       <div ref={marqueeRef1} className="relative hidden overflow-hidden border-t border-y border-gray-200 py-12 md:block">
-        <div className="marquee-content flex gap-20 whitespace-nowrap">
+        <div className="marquee-content inline-flex gap-20">
           {[...sponsorsRow1, ...sponsorsRow1].map((sponsor, i) => (
             <div key={i} className="inline-flex min-w-[320px] max-w-[360px] flex-1">
               {renderPlaceholderCard(sponsor.name, sponsor.logo, sponsor.logoFit, i)}
@@ -153,7 +154,7 @@ export default function SponsorsSection() {
 
       {/* Second Marquee Row (Opposite Direction) */}
       <div ref={marqueeRef2} className="relative hidden overflow-hidden border-b border-gray-200 py-12 md:block">
-        <div className="marquee-content flex gap-20 whitespace-nowrap">
+        <div className="marquee-content inline-flex gap-20">
           {[...sponsorsRow2, ...sponsorsRow2].map((sponsor, i) => (
             <div key={i} className="inline-flex min-w-[320px] max-w-[360px] flex-1">
               {renderPlaceholderCard(sponsor.name, sponsor.logo, sponsor.logoFit, i + sponsorsRow1.length)}
