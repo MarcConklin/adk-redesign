@@ -25,7 +25,7 @@ const events: EventItem[] = [
   {
     title: 'Freedom Supercars at Sunset',
     category: 'Supercars at Sunset',
-    date: '2026-04-25',
+    date: '2026-05-02',
     location: 'Freedom Life Church, Gap PA',
     time: '5:00 PM to 9:00 PM',
     image: '/images/DJI_0175_Original+2.jpg'
