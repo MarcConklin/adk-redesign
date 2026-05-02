@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { readFile, writeFile, mkdir } from 'fs/promises';
+import path from 'path';
 
 // In-memory rate limiting (per serverless instance — good enough for burst protection)
 const rateMap = new Map<string, number[]>();
@@ -18,10 +20,83 @@ function sanitize(str: string): string {
   return str.replace(/[<>"'`]/g, '').trim().slice(0, 100);
 }
 
+type WaiverRecord = {
+  name: string;
+  agreed: boolean;
+  ip_address: string;
+  user_agent: string;
+  created_at: string;
+};
+
+const localWaiverPath = path.join(process.cwd(), '.data', 'waivers.json');
+
+async function loadLocalWaivers(): Promise<WaiverRecord[]> {
+  try {
+    const raw = await readFile(localWaiverPath, 'utf8');
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+async function saveLocalWaivers(records: WaiverRecord[]): Promise<void> {
+  await mkdir(path.dirname(localWaiverPath), { recursive: true });
+  await writeFile(localWaiverPath, JSON.stringify(records, null, 2), 'utf8');
+}
+
+async function saveWaiverLocally(input: {
+  fullName: string;
+  ip: string;
+  userAgent: string;
+}): Promise<'saved' | 'duplicate'> {
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
+
+  const waivers = await loadLocalWaivers();
+  const duplicate = waivers.some(
+    record =>
+      record.name === input.fullName &&
+      new Date(record.created_at).getTime() >= todayStart.getTime()
+  );
+
+  if (duplicate) {
+    return 'duplicate';
+  }
+
+  waivers.push({
+    name: input.fullName,
+    agreed: true,
+    ip_address: input.ip,
+    user_agent: input.userAgent,
+    created_at: new Date().toISOString(),
+  });
+
+  await saveLocalWaivers(waivers);
+  return 'saved';
+}
+
 function getSupabase() {
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL;
+  const serviceRoleKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SERVICE_ROLE;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseKey = serviceRoleKey ?? anonKey;
+
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Missing Supabase environment variables.');
+  }
+
   return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    supabaseUrl,
+    supabaseKey,
+    {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    }
   );
 }
 
@@ -65,43 +140,44 @@ export async function POST(req: NextRequest) {
   const fullName = [cleanFirst, cleanMiddle, cleanLast].filter(Boolean).join(' ');
 
   const userAgent = req.headers.get('user-agent') ?? 'unknown';
-  const supabase = getSupabase();
+  try {
+    const supabase = getSupabase();
 
-  // Duplicate check — same full name submitted today
-  const todayStart = new Date();
-  todayStart.setHours(0, 0, 0, 0);
+    const { error: insertError } = await supabase.from('waivers').insert({
+      name: fullName,
+      agreed: true,
+      ip_address: ip,
+      user_agent: userAgent,
+    });
 
-  const { data: existing, error: checkError } = await supabase
-    .from('waivers')
-    .select('id')
-    .eq('name', fullName)
-    .gte('created_at', todayStart.toISOString())
-    .limit(1);
+    if (insertError) {
+      console.warn('Supabase insert error:', insertError.message);
+      if (process.env.NODE_ENV !== 'production') {
+        const localResult = await saveWaiverLocally({ fullName, ip, userAgent });
+        if (localResult === 'duplicate') {
+          return NextResponse.json(
+            { error: 'A waiver was already submitted under this name today.' },
+            { status: 409 }
+          );
+        }
+        return NextResponse.json({ success: true, fallback: 'local' }, { status: 200 });
+      }
+      return NextResponse.json({ error: 'Failed to save waiver. Please try again.' }, { status: 500 });
+    }
 
-  if (checkError) {
-    console.error('Supabase check error:', checkError.message);
-    return NextResponse.json({ error: 'Server error. Please try again.' }, { status: 500 });
-  }
-
-  if (existing && existing.length > 0) {
-    return NextResponse.json(
-      { error: 'A waiver was already submitted under this name today.' },
-      { status: 409 }
-    );
-  }
-
-  // Insert
-  const { error: insertError } = await supabase.from('waivers').insert({
-    name: fullName,
-    agreed: true,
-    ip_address: ip,
-    user_agent: userAgent,
-  });
-
-  if (insertError) {
-    console.error('Supabase insert error:', insertError.message);
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error) {
+    console.warn('Supabase request failed:', error);
+    if (process.env.NODE_ENV !== 'production') {
+      const localResult = await saveWaiverLocally({ fullName, ip, userAgent });
+      if (localResult === 'duplicate') {
+        return NextResponse.json(
+          { error: 'A waiver was already submitted under this name today.' },
+          { status: 409 }
+        );
+      }
+      return NextResponse.json({ success: true, fallback: 'local' }, { status: 200 });
+    }
     return NextResponse.json({ error: 'Failed to save waiver. Please try again.' }, { status: 500 });
   }
-
-  return NextResponse.json({ success: true }, { status: 200 });
 }
