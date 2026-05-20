@@ -39,7 +39,7 @@ export const sponsors: Sponsor[] = [
   {
     name: 'Refined Auto Detailing',
     website: 'https://www.refinedautodetailing.com/',
-    logo: '/sponsors/refined-auto-detailing.jpg',
+    logo: '/sponsors/refined-auto-detailing.png',
     logoFit: 'contain',
     description: "Refined Auto Detailing & Coatings is Lancaster, Pennsylvania's trusted destination for premium vehicle protection, holding certifications in Ceramic Pro, Fireball, and SB3 Coatings systems. Their expert team specializes in paint protection film, ceramic coatings, paint correction, and luxury detailing — all backed by thorough pre-service inspections and industry-leading warranties."
   },
@@ -49,6 +49,13 @@ export const sponsors: Sponsor[] = [
     logo: '/sponsors/black-glass.png',
     logoFit: 'contain',
     description: "Since 2009, Black Glass Window Tinting + More has grown from a humble auto tint shop into one of Pennsylvania's most respected full-service window film companies. Operating from state-of-the-art shops in Palm and Lancaster County, they provide precision computer-cut tinting for vehicles, homes, and commercial properties, alongside PPF, ceramic coating, and Tesla-specific services."
+  },
+  {
+    name: 'Foxy Coatings',
+    website: 'https://foxycoatings.com/',
+    logo: '/sponsors/foxy-coatings.png',
+    logoFit: 'contain',
+    description: 'Foxy Coatings is a leading provider of polyaspartic floor coatings, specializing in garage floors, basements, patios, driveways, and commercial and industrial spaces. Their team focuses on durable, slip-resistant finishes, fast installation, and a polished result built to stand up to everyday use.'
   },
   {
     name: 'Topline Heating and Air',
@@ -105,6 +112,13 @@ export const sponsors: Sponsor[] = [
     logo: '/sponsors/cropped-IMG_20190828_150714_01.jpg',
     logoFit: 'contain',
     description: 'Based just outside West Chester, PA, Modern Elix is a premium automotive protection studio specializing in paint protection film, vinyl wraps, ceramic coatings, and XPEL window tinting for vehicles of all types. Their climate-controlled, state-of-the-art facility serves car enthusiasts across Pennsylvania, New Jersey, and Delaware — with precision workmanship on everything from daily drivers to exotic supercars.'
+  },
+  {
+    name: 'Gemstone Labs',
+    website: 'https://gemstonelabscarcare.com/',
+    logo: '/sponsors/gemstone-labs.jpeg',
+    logoFit: 'contain',
+    description: 'Gemstone Labs Car Care helps enthusiasts achieve deep gloss, real protection, and a flawless finish with premium detailing products for washing, maintenance, protection, and accessories. Founded by a lifelong car enthusiast, the brand is built around high-end results made simple for at-home care.'
   },
   {
     name: 'JesusChat™',
