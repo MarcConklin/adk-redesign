@@ -72,6 +72,7 @@ export default function SponsorsSection() {
     name: string,
     logo: string | null,
     logoFit: 'cover' | 'contain' | undefined,
+    logoPanelClassName: string | undefined,
     index: number
   ) => (
     <div
@@ -80,7 +81,7 @@ export default function SponsorsSection() {
     >
       {logo ? (
         <div className="flex w-full flex-col items-center gap-4">
-          <div className="relative aspect-square w-full max-w-[132px] overflow-hidden rounded-[18px] border border-black/8 shadow-[0_10px_30px_rgba(0,0,0,0.12)] sm:max-w-[156px]">
+          <div className={`relative aspect-square w-full max-w-[132px] overflow-hidden rounded-[18px] border border-black/8 shadow-[0_10px_30px_rgba(0,0,0,0.12)] sm:max-w-[156px] ${logoPanelClassName ?? 'bg-white'}`}>
             <Image
               src={logo}
               alt={`${name} logo`}
@@ -138,7 +139,7 @@ export default function SponsorsSection() {
       </div>
 
       <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 md:hidden">
-        {sponsors.map((sponsor, index) => renderPlaceholderCard(sponsor.name, sponsor.logo, sponsor.logoFit, index))}
+        {sponsors.map((sponsor, index) => renderPlaceholderCard(sponsor.name, sponsor.logo, sponsor.logoFit, sponsor.logoPanelClassName, index))}
       </div>
 
       {/* First Marquee Row */}
@@ -146,7 +147,7 @@ export default function SponsorsSection() {
         <div className="marquee-content inline-flex gap-20">
           {[...sponsorsRow1, ...sponsorsRow1].map((sponsor, i) => (
             <div key={i} className="inline-flex min-w-[320px] max-w-[360px] flex-1">
-              {renderPlaceholderCard(sponsor.name, sponsor.logo, sponsor.logoFit, i)}
+              {renderPlaceholderCard(sponsor.name, sponsor.logo, sponsor.logoFit, sponsor.logoPanelClassName, i)}
             </div>
           ))}
         </div>
@@ -157,7 +158,7 @@ export default function SponsorsSection() {
         <div className="marquee-content inline-flex gap-20">
           {[...sponsorsRow2, ...sponsorsRow2].map((sponsor, i) => (
             <div key={i} className="inline-flex min-w-[320px] max-w-[360px] flex-1">
-              {renderPlaceholderCard(sponsor.name, sponsor.logo, sponsor.logoFit, i + sponsorsRow1.length)}
+              {renderPlaceholderCard(sponsor.name, sponsor.logo, sponsor.logoFit, sponsor.logoPanelClassName, i + sponsorsRow1.length)}
             </div>
           ))}
         </div>

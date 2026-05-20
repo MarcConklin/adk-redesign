@@ -3,6 +3,7 @@ export type Sponsor = {
   website: string | null;
   logo: string | null;
   logoFit?: 'cover' | 'contain';
+  logoPanelClassName?: string;
   description?: string;
   appStoreUrl?: string;
 };
@@ -41,6 +42,7 @@ export const sponsors: Sponsor[] = [
     website: 'https://www.refinedautodetailing.com/',
     logo: '/sponsors/refined-auto-detailing.png',
     logoFit: 'contain',
+    logoPanelClassName: 'bg-[linear-gradient(145deg,rgba(226,226,226,0.98),rgba(198,198,198,0.96))]',
     description: "Refined Auto Detailing & Coatings is Lancaster, Pennsylvania's trusted destination for premium vehicle protection, holding certifications in Ceramic Pro, Fireball, and SB3 Coatings systems. Their expert team specializes in paint protection film, ceramic coatings, paint correction, and luxury detailing — all backed by thorough pre-service inspections and industry-leading warranties."
   },
   {

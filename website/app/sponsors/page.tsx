@@ -8,6 +8,7 @@ function SponsorCard({
   website,
   logo,
   logoFit,
+  logoPanelClassName,
   description,
   appStoreUrl,
   index
@@ -16,6 +17,7 @@ function SponsorCard({
   website: string | null;
   logo: string | null;
   logoFit?: 'cover' | 'contain';
+  logoPanelClassName?: string;
   description?: string;
   appStoreUrl?: string;
   index: number;
@@ -37,7 +39,7 @@ function SponsorCard({
         <div className="relative mb-6 overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.97),rgba(244,244,245,0.9))] p-5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
           <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-black/15 to-transparent"></div>
           {logo ? (
-            <div className="relative aspect-square w-full overflow-hidden rounded-[22px] border border-black/8 shadow-[0_16px_40px_rgba(0,0,0,0.14)]">
+            <div className={`relative aspect-square w-full overflow-hidden rounded-[22px] border border-black/8 shadow-[0_16px_40px_rgba(0,0,0,0.14)] ${logoPanelClassName ?? 'bg-white'}`}>
               <Image
                 src={logo}
                 alt={`${name} logo`}
