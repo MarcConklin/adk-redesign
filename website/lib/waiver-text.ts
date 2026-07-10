@@ -1,11 +1,14 @@
+export const WAIVER_EVENT_NAME = 'ADK Supercars at Sunset 4th of July';
+export const WAIVER_EVENT_DATE = 'July 11, 2026';
+
 export const WAIVER_PARAGRAPHS = [
   {
     type: 'title' as const,
-    text: 'Release, Waiver of Liability, Assumption of Risk, and Indemnity Agreement Regarding Automobile / Motorcycle Show',
+    text: `Release, Waiver of Liability, Assumption of Risk, and Indemnity Agreement for ${WAIVER_EVENT_NAME} on ${WAIVER_EVENT_DATE}`,
   },
   {
     type: 'body' as const,
-    text: 'For and in consideration of being permitted to compete and/or participate in ADK Supercars at Sunset at Classic Automall in Morgantown, PA hereinafter called the "Event", and other good and valuable consideration, the receipt and sufficiency of which is hereby acknowledged, Participant hereby releases, waives and discharges ADK AUTOMOTIVE, LLC, its Members, Officers, Employees, Agents, Contractors, Sub-Contractors, Sponsors, Promoters, Vendors, and Advertisers hereinafter referred to as the "Releasees," and each of them, from all liability to the Participant, his/her spouse, legal representatives, heirs and assigns, for any and all loss or damage, and any claim or damages resulting therefrom, on account of injury to Participants person or property, even injury resulting in death of Participant, whether caused by the negligence of Releasees, while the Participant is competing in or participating in the Event.',
+    text: `For and in consideration of being permitted to compete and/or participate in ${WAIVER_EVENT_NAME} on ${WAIVER_EVENT_DATE} at Classic Automall in Morgantown, PA hereinafter called the "Event", and other good and valuable consideration, the receipt and sufficiency of which is hereby acknowledged, Participant hereby releases, waives and discharges ADK AUTOMOTIVE, LLC, its Members, Officers, Employees, Agents, Contractors, Sub-Contractors, Sponsors, Promoters, Vendors, and Advertisers hereinafter referred to as the "Releasees," and each of them, from all liability to the Participant, his/her spouse, legal representatives, heirs and assigns, for any and all loss or damage, and any claim or damages resulting therefrom, on account of injury to Participants person or property, even injury resulting in death of Participant, whether caused by the negligence of Releasees, while the Participant is competing in or participating in the Event.`,
   },
   {
     type: 'body' as const,

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { WAIVER_PARAGRAPHS } from '@/lib/waiver-text';
+import { WAIVER_EVENT_DATE, WAIVER_EVENT_NAME, WAIVER_PARAGRAPHS } from '@/lib/waiver-text';
 
 type FormState = 'idle' | 'loading' | 'success' | 'error';
 
@@ -82,6 +82,9 @@ export default function WaiverPage() {
       <div className="shrink-0 bg-black px-5 py-4 shadow-lg">
         <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-red-500">ADK Automotive</p>
         <h1 className="text-xl font-black uppercase leading-tight text-white tracking-tight">Event Waiver</h1>
+        <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
+          {WAIVER_EVENT_NAME} - {WAIVER_EVENT_DATE}
+        </p>
       </div>
 
       {/* Scroll hint banner */}
