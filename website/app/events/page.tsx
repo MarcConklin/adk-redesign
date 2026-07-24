@@ -52,7 +52,7 @@ const events: EventItem[] = [
     category: 'Supercars at Sunset',
     date: '2026-07-25',
     location: 'Calvary Chapel, Chester Springs PA',
-    time: '5:00 PM to 8:30 PM',
+    time: '5:30 PM to 8:30 PM',
     image: freshGallery[3]
   },
   {
