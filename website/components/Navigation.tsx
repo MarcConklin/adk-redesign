@@ -106,7 +106,7 @@ export default function Navigation() {
             How Can We Pray For You?
           </button>
           <a
-            href="https://renndvous.com/event/supercars-at-sunset-calvary-chapel/"
+            href="https://renndvous.com/event/supercars-at-sunset-4/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAaej2238qSF_pylNZjpy99YOAjNozL2WKhYCah2ZaEp4hwXvSgZ3k224EQVUxQ_aem_WOekgVZkbHHMjeDy5m6VDw"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-white text-black px-8 py-3 rounded-full hover:bg-gray-100 transition-all hover:scale-105 font-semibold"
@@ -198,7 +198,7 @@ export default function Navigation() {
                 How Can We Pray For You?
               </button>
               <a
-                href="https://renndvous.com/event/supercars-at-sunset-calvary-chapel/"
+                href="https://renndvous.com/event/supercars-at-sunset-4/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAaej2238qSF_pylNZjpy99YOAjNozL2WKhYCah2ZaEp4hwXvSgZ3k224EQVUxQ_aem_WOekgVZkbHHMjeDy5m6VDw"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}

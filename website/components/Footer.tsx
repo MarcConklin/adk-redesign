@@ -77,7 +77,7 @@ export default function Footer() {
               <li><a href="/gallery" className="hover:text-red-600 transition-colors font-light">Gallery</a></li>
               <li><a href="/sponsors" className="hover:text-red-600 transition-colors font-light">Sponsors</a></li>
               <li><a href="/#inquiry" className="hover:text-red-600 transition-colors font-light">Become a Vendor</a></li>
-              <li><a href="https://renndvous.com/event/supercars-at-sunset-calvary-chapel/" target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition-colors font-light">Buy Tickets</a></li>
+              <li><a href="https://renndvous.com/event/supercars-at-sunset-4/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAaej2238qSF_pylNZjpy99YOAjNozL2WKhYCah2ZaEp4hwXvSgZ3k224EQVUxQ_aem_WOekgVZkbHHMjeDy5m6VDw" target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition-colors font-light">Buy Tickets</a></li>
             </ul>
           </div>
 

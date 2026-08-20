@@ -64,22 +64,6 @@ const events: EventItem[] = [
     image: '/images/ADKSupercarShow1-33.JPG'
   },
   {
-    title: 'Freedom Supercars at Sunset',
-    category: 'Supercars at Sunset',
-    date: '2026-09-12',
-    location: 'Freedom Life Church, Gap PA',
-    time: '5:00 PM to 9:00 PM',
-    image: '/images/_DSC4541.JPG'
-  },
-  {
-    title: 'Supercars at Sunset',
-    category: 'Supercars at Sunset',
-    date: '2026-09-26',
-    location: 'Chester County Airport, Coatesville PA',
-    time: '3:00 PM to 7:00 PM',
-    image: '/images/DJI_0810.JPG'
-  },
-  {
     title: 'Road Rally',
     category: 'Road Rally',
     date: '2026-10-17',
