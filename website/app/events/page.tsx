@@ -64,6 +64,14 @@ const events: EventItem[] = [
     image: '/images/ADKSupercarShow1-33.JPG'
   },
   {
+    title: 'Supercars at Sunset',
+    category: 'Supercars at Sunset',
+    date: '2026-09-26',
+    location: 'Classic Auto Mall, Morgantown PA',
+    time: '6:00 PM to 9:00 PM',
+    image: '/gallery/_DSC6802.jpg'
+  },
+  {
     title: 'Road Rally',
     category: 'Road Rally',
     date: '2026-10-17',
