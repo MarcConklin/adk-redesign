@@ -1,6 +1,6 @@
-export const WAIVER_EVENT_NAME = 'Supercars at Sunset at Calvary Chapel Chester Springs';
-export const WAIVER_EVENT_DATE = 'Saturday, July 25, 2026, 5:30-8:30 PM';
-export const WAIVER_EVENT_LOCATION = 'Calvary Chapel Chester Springs in Chester Springs, PA';
+export const WAIVER_EVENT_NAME = 'Supercars at Sunset at DOVE Westgate Church';
+export const WAIVER_EVENT_DATE = 'Sunday, August 23, 2026, 6:00-9:00 PM';
+export const WAIVER_EVENT_LOCATION = 'DOVE Westgate Church in Ephrata, PA';
 
 export const WAIVER_PARAGRAPHS = [
   {
