@@ -15,6 +15,7 @@ type EventItem = {
   time: string;
   image: string;
   ticketsUrl?: string;
+  registrationNote?: string;
   isHolidayFeature?: boolean;
 };
 
@@ -88,9 +89,11 @@ const events: EventItem[] = [
     title: 'Road Rally',
     category: 'Road Rally',
     date: '2026-10-17',
-    location: 'Destinations TBD',
-    time: '5:00 PM to 9:00 PM',
-    image: '/images/_DSC3132_Original+2.jpg'
+    location: 'Elizabeth Farms, Lititz to The Mill in Hershey',
+    time: '8:00 AM to 1:00 PM',
+    image: '/images/_DSC3132_Original+2.jpg',
+    ticketsUrl: 'https://renndvous.com/event/adk-road-rally-2/?utm_source=ig&utm_medium=social&utm_content=link_in_bio',
+    registrationNote: 'More details after registration.'
   },
   {
     title: 'Cars and Coffee',
@@ -161,6 +164,9 @@ function EventCard({ event, index, featured = false }: { event: EventItem; index
             <h3 className="text-3xl md:text-4xl font-black leading-[1.02] text-white mb-5">{event.title}</h3>
             <p className="text-white/85 text-lg md:text-xl mb-3">{event.location}</p>
             <p className="text-white/70 text-base md:text-lg mb-6">{event.time}</p>
+            {event.registrationNote && (
+              <p className="text-white/60 text-sm uppercase tracking-[0.14em]">{event.registrationNote}</p>
+            )}
             {event.isHolidayFeature && (
               <span className="inline-flex rounded-full border border-red-300/40 bg-red-500/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-red-200">
                 Fourth of July Feature Show
