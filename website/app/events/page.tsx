@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 // Re-evaluate the next event on every request rather than freezing it at build time.
 export const dynamic = 'force-dynamic';
 
-type EventCategory = 'Supercars at Sunset' | 'Cars and Coffee' | 'Road Rally';
+type EventCategory = 'Supercars at Sunset' | 'Supercar Show' | 'Cars and Coffee' | 'Road Rally';
 
 type EventItem = {
   title: string;
@@ -96,9 +96,9 @@ const events: EventItem[] = [
     registrationNote: 'More details after registration.'
   },
   {
-    title: 'Cars and Coffee',
-    category: 'Cars and Coffee',
-    date: '2026-11-01',
+    title: 'ADK Supercar Show Season Finale',
+    category: 'Supercar Show',
+    date: '2026-11-07',
     location: 'Classic Auto Mall, Morgantown PA',
     time: '9:00 AM to 12:00 PM',
     image: '/images/0CA4A52AB94D37BB0CAF481AC7E6A650.jpg'
@@ -108,7 +108,7 @@ const events: EventItem[] = [
     category: 'Road Rally',
     date: '2026-11-21',
     location: 'Destinations TBD',
-    time: '5:00 PM to 9:00 PM',
+    time: '9:00 AM to 12:00 PM',
     image: '/images/ADKRoadRallyII2024-56.jpeg'
   }
 ];

@@ -46,11 +46,11 @@ export const sponsors: Sponsor[] = [
     description: "Refined Auto Detailing & Coatings is Lancaster, Pennsylvania's trusted destination for premium vehicle protection, holding certifications in Ceramic Pro, Fireball, and SB3 Coatings systems. Their expert team specializes in paint protection film, ceramic coatings, paint correction, and luxury detailing — all backed by thorough pre-service inspections and industry-leading warranties."
   },
   {
-    name: 'Black Glass',
+    name: 'BlackGlass Automotive Styling',
     website: 'https://blackglasstinting.com/',
     logo: '/sponsors/black-glass.png',
     logoFit: 'contain',
-    description: "Since 2009, Black Glass Window Tinting + More has grown from a humble auto tint shop into one of Pennsylvania's most respected full-service window film companies. Operating from state-of-the-art shops in Palm and Lancaster County, they provide precision computer-cut tinting for vehicles, homes, and commercial properties, alongside PPF, ceramic coating, and Tesla-specific services."
+    description: 'Since 2009, Award-Winning BlackGlass has set the standard for Quality, Precision, and Craftsmanship, treating every vehicle like an Exotic. With two welcoming locations serving Lehigh Valley, Berks, Montgomery, and Lancaster counties, we specialize in Premium Window Tinting, Paint Protection Film (PPF), Color PPF, Vinyl Wraps, Ceramic Coatings, and Residential & Commercial Window Tinting and Security Films. Trusted by discerning owners who refuse to compromise on Quality.'
   },
   {
     name: 'Foxy Coatings',
