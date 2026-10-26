@@ -101,7 +101,8 @@ const events: EventItem[] = [
     date: '2026-11-07',
     location: 'Classic Auto Mall, Morgantown PA',
     time: '9:00 AM to 12:00 PM',
-    image: '/images/0CA4A52AB94D37BB0CAF481AC7E6A650.jpg'
+    image: '/images/0CA4A52AB94D37BB0CAF481AC7E6A650.jpg',
+    ticketsUrl: 'https://renndvous.com/event/adk-season-finale/'
   },
   {
     title: 'Road Rally',
